@@ -1,3 +1,4 @@
+![alt-text](images/norwester_blue.png)
 # EpiCoronaHack 2020
 
 Curious about the novel coronavirus that has been in the news? Wondering how worried you should be? Want to learn how researchers estimate the incubation period, transmissibility and other key features of this emerging outbreak? Want to make your own estimates, models, and forecasts and see what you find? 
