@@ -4,11 +4,12 @@ Curious about the novel coronavirus that has been in the news? Wondering how wor
 
 The MAGPIE research group, supported by PIMS and CANSSI, is hosting a hackathon called EpiCoronaHack. Come and join us to explore data analysis, epidemic modelling, inference, and simulation with the available coronavirus data. 
 
-All are welcome! But some knowledge of at least one of the following is strongly recommended:
-  Mathematics - ODEs, mathematical modelling
-  Statistics - stochastic models, statistical inference
-  Computing - R, MATLAB, Python or similar
-  Epidemiology, infectious disease modelling or outbreak analysis 
+All are welcome! But some knowledge of at least one of the following is strongly recommended:  
+
+- Mathematics: ODEs, mathematical modelling
+- Statistics: stochastic models, statistical inference
+- Computing: R, MATLAB, Python or similar
+- Epidemiology, infectious disease modelling or outbreak analysis 
 
 Date: Tuesday, February 18 and Wednesday, February 19, 2020
 
