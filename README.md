@@ -20,7 +20,7 @@ Sign-in begins at 9:00 AM on Feb. 18, opening talk at 9:30 AM.
 Location: Big Data Hub - ASB 10900, CANSSI area, BDH Foyer
 
 ## Content
-re suggesting the following major themes, and will provide data, links to existing analyses and suggestions for new analyses within each theme. Jump in and get started. The list below is a brainstorm; we are continually reviewing the data and analysis available, and we will pose specific suggested hacking projects on the starting day. 
+We are suggesting the following major themes, and will provide data, links to existing analyses and suggestions for new analyses within each theme. Jump in and get started. The list below is a brainstorm; we are continually reviewing the data and analysis available, and we will pose specific suggested hacking projects on the starting day. 
  These themes overlap - models are used for estimates, estimates are used in models and forecasts, and the viral sequences play a role in the estimation. 
 
 
