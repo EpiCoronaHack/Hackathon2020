@@ -85,7 +85,12 @@ Wu et al - estimation and forecasting using international case counts and flight
 
 
 ## Instructions
-
+  
+  1. Choose one team member to fork this repository.
+  2. Add all other team members as collaborators, and clone the new fork.
+  3. Make a new subdirectory within the chosen theme directory to be your working directory.
+  4. Once completed, submit a pull request to this original repository.
+    
 ## Collaborative computing 
 
 We have a dedicated JupyterHub for EpiCoronaHack! It's deployed on Compute Canada, thanks to Jim Colliander and Ian Allison. See https://epicoronahack.syzygy.ca/. For more information about collaborative computing, see https://intro.syzygy.ca. 
