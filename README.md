@@ -51,6 +51,35 @@ These are just a few of the modelling questions that can be based on the estimat
 
  (4) Learn about epidemic dynamics from viral sequences 
 
- About 50 sequences from the outbreak are available on GISAID. They can tell us about things like when the virus likely first emerged, and about the spreading dynamics.
+ About 80 sequences from the outbreak are available on GISAID. They can tell us about things like when the virus likely first emerged, and about the spreading dynamics.
+ 
+## Key terminology 
+
+R0, the basic reproduction number: the mean number of new infections a case infects in a fully susceptible population
+
+Incubation period: the time between exposure and symptoms
+
+Serial interval: the time elapsed between symptoms in the infector and in their infectee
+
+Generation time: the time between the infector getting infected and infecting their infectee
+
+## Background reading
+
+This is a very sparse selection of reading that participants can jump into right away. 
+
+Imperial College London reports from the MRC Centre for Outbreak Analysis: 
+https://www.imperial.ac.uk/mrc-global-infectious-disease-analysis/news--wuhan-coronavirus/
+There are 4 reports. We suggest that you read these in order starting with 1. 
+
+Backer et al - estimate the incubation period https://www.medrxiv.org/content/10.1101/2020.01.27.20018986v1
+
+Liu et al - estimate of the basic reproduction number using confirmed case count data https://www.biorxiv.org/content/10.1101/2020.01.25.919787v1
+
+Classics, background to Liu et al: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1766383/ and https://academic.oup.com/aje/article/160/6/509/79472
+
+Riou and Althaus - estimate basic reproduction number with a stochastic model https://www.biorxiv.org/content/10.1101/2020.01.23.917351v1
+
+Wu et al - estimation and forecasting using international case counts and flight information https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)30260-9/fulltext#sec1 (see also the modelling theme - we have implemented this model) 
+
 
 ## Instructions
