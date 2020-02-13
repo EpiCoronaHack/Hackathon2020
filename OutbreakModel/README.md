@@ -16,7 +16,6 @@ If you have estimated the duration of the infectious period (let's call it D) an
 
 This section particularly focuses on models that estimate R0 (so this is also estimation, but it is here because it is based on mathematical modelling as opposed to mainly statistical modelling). 
 
-
 Liu et al https://www.biorxiv.org/content/10.1101/2020.01.25.919787v1.full.pdf
 Uses confirmed cases to Jan 23, then additional data; assumes SARS generation time (could be updated!) 
 This analysis is based on line list data -- data in which each row is a case. This would be an interesting one to repeat using new line list data. The model is straightforward enough to code. Note that I think equation 2-2 should read t_i, not t_1. 
@@ -36,6 +35,8 @@ Simon Frost has collected references that estimate R0: https://docs.google.com/s
 
 Imperial College London's MRC Centre for Outbreak analysis report 3: https://www.imperial.ac.uk/media/imperial-college/medicine/sph/ide/gida-fellowships/Imperial-2019-nCoV-transmissibility.pdf
 They also used stochastic simulation, and case count data. This approach could be re-done in light of new data. Their approach could also be extended as a forecasting tool - we could investigate how well what they predicted in the days following their report matched reality. We may need to consider how this would have been impacted by changes in public activity, and could the model be adapted to reflect this?
+
+[Imperial College London's MRC Centre for Outbreak analysis reports 1 and 2](https://www.imperial.ac.uk/media/imperial-college/medicine/sph/ide/gida-fellowships/Imperial-2019-nCoV-transmissibility.pdf). These reports investigate the under-reporting of nCoV cases in Wuhan city. Using a probabilistic approach, they infer the 'true' number of nCoV cases within Wuhan City that may have occurred by 2 given dates, by assuming the number of cases detected outside China is fully observed. The only data required is that included in the report. It would be interesting to explore and test their assumptions, or to create more up-to-date estimates using recent case count data.
 
 
 ## Data
