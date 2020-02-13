@@ -55,13 +55,13 @@ These are just a few of the modelling questions that can be based on the estimat
  
 ## Key terminology 
 
-R0, the basic reproduction number: the mean number of new infections a case infects in a fully susceptible population
+**R0**, the basic reproduction number: the mean number of new infections a case infects in a fully susceptible population
 
-Incubation period: the time between exposure and symptoms
+**Incubation period**: the time between exposure and symptoms
 
-Serial interval: the time elapsed between symptoms in the infector and in their infectee
+**Serial interval**: the time elapsed between symptoms in the infector and in their infectee
 
-Generation time: the time between the infector getting infected and infecting their infectee
+**Generation time**: the time between the infector getting infected and infecting their infectee
 
 ## Background reading
 
