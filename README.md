@@ -63,6 +63,8 @@ These are just a few of the modelling questions that can be based on the estimat
 
 **Generation time**: the time between the infector getting infected and infecting their infectee
 
+For participants new to epidemic modelling, we have prepared [some introductory slides here](./images/intro_to_epi.pdf)
+
 ## Background reading
 
 This is a very sparse selection of reading that participants can jump into right away. 
