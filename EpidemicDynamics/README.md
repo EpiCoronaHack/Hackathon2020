@@ -2,7 +2,7 @@
 
 ### About 80 sequences from the outbreak are available on GISAID. They can tell us about things like when the virus likely first emerged, and about the spreading dynamics.
 
-#### Data will be supplied upon request.
+#### Data will be supplied upon request and will only be made available to the participants of 2020 EpiCoronaHackathon.
 
 #### How to Perform Sequence Alignment on 2019-nCoV with MAFFT:
 
