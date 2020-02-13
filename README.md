@@ -88,4 +88,4 @@ Wu et al - estimation and forecasting using international case counts and flight
 
 ## Collaborative computing 
 
-We have a dedicated JupyterHub for EpiCoronaHack! It's deployed on Compute Canada, thanks to Jim Colliander and Ian Allison. See https://epicoronahack.syzygy.ca/. 
+We have a dedicated JupyterHub for EpiCoronaHack! It's deployed on Compute Canada, thanks to Jim Colliander and Ian Allison. See https://epicoronahack.syzygy.ca/. For more information about collaborative computing, see https://intro.syzygy.ca. 
