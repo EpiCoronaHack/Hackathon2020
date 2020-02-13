@@ -30,5 +30,13 @@ new data sources!
 
 [JHU CSSE data](https://docs.google.com/spreadsheets/d/1wQVypefm946ch4XDp37uZ-wartW4V7ILdg-qYiDXUHM/htmlview?usp=sharing&sle=true#). Case count data curated by Johns Hopkins University Center for Systems Science and Engineering. Someone has formatted this to [csv on Kaggle here](https://www.kaggle.com/sudalairajkumar/novel-corona-virus-2019-dataset), and as of 11/02 the JHU team is making the data available on [Github here](https://github.com/CSSEGISandData/COVID-19).
 
+### Travel data
+
+[Tencent’s LBS (location-based services) database](https://heat.qq.com/). The daily number of Chinese domestic passengers by means of air, train and road transportation, recorded by Tencent’s LBS database. Used in the Wu et al analysis. **However** this website is written in Chinese! If anyone is willing to translate and extract the data this would be excellent.  
+
+### Other data
+
+[Wu et al (2020)](https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)30260-9/fulltext#seccestitle150) and [supplementary information](https://www.thelancet.com/cms/10.1016/S0140-6736(20)30260-9/attachment/f77f1dc7-43a5-4d5e-a709-5cf061abdfdc/mmc1.pdf). Contains various data tables of line list data, social and personal non-pharmaceutical interventions implemented in China, and relevant information from SARS and MERS. 
+
 
 
