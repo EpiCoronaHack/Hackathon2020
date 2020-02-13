@@ -85,10 +85,11 @@ Wu et al - estimation and forecasting using international case counts and flight
 
 
 ## Instructions
-  
+All team members will need a github account. 
   1. Choose one team member to fork this repository.
-  2. Add all other team members as collaborators, and clone the new fork.
-  3. Make a new subdirectory within the chosen theme directory to be your working directory.
+
+  2. Make a new subdirectory within the chosen theme directory to be your working directory.
+  3. Add all other team members as collaborators, and clone the new fork.
   4. Once completed, submit a pull request to this original repository.
     
 ## Collaborative computing 
