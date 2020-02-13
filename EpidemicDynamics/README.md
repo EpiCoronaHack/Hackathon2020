@@ -4,6 +4,6 @@
 
 #### Data will be supplied upon request.
 
-#### How to Perform Sequence Alignment on 2019-nCoV with MAFFT
+#### How to Perform Sequence Alignment on 2019-nCoV with MAFFT:
 
 https://towardsdatascience.com/how-to-perform-sequence-alignment-on-2019-ncov-with-mafft-96c1944da8c6
