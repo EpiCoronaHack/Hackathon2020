@@ -10,7 +10,7 @@ Here are a few of the links and a description of what the papers did.
 
 ## The simplest model
 
-If you have estimated the duration of the infectious period (let's call it D) and you think that your outbreak is in an exponential growth phase, then you can model the number of cases as N(t)= N(0) exp (R0-1)(t/D). Then, you can fit this model to case count data, if you have them (and if you trust them).  This requires an estimate of D, of course, and knowledge of when the first case happened (or at least, a time, 0, when we know the number of cases). 
+If you have estimated the duration of the infectious period (let's call it D) and you think that your outbreak is in an exponential growth phase, then you can model the number of cases as N(t)= N(0) exp((R0-1)(t/D)). Then, you can fit this model to case count data, if you have them (and if you trust them).  This requires an estimate of D, of course, and knowledge of when the first case happened (or at least, a time, 0, when we know the number of cases). 
 
 ## Some early models of this outbreak, where code is available or feasible to write
 
