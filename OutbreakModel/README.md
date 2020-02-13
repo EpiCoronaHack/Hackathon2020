@@ -25,7 +25,7 @@ Riou and Althaus https://www.biorxiv.org/content/10.1101/2020.01.23.917351v1: St
 
 Read et al https://www.medrxiv.org/content/10.1101/2020.01.23.20018549v2
 Deterministic SEIR model, within and between Chinese cities.
-Code is available but the analysis requires data from OAG traffic analyser. It might be possible to obtain data like that from wechat using APIs, or from other sources.
+Code is available but the analysis requires airplane data from OAG traffic analyser. It might be possible to obtain data like that from wechat using APIs, or from other sources (let us know if you'd be interested to do this). Historical flight data is also available from [this EcoHealth Alliance app](https://flirt.eha.io/), where it can be downloaded for free, but will need to be adjusted for non-full flights. Possibilities for extension include further adjustment of flight estimates for Lunar new year, and inclusion of rail and road travel estimates (to the best of our knowledge, no one has considered this so far). 
 
 Wu et al, Lancet: https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)30260-9/fulltext#sec1
 These authors fit their model to international cases, assuming that these would be detected (while cases within Wuhan might not be - without a specific diagnostic test it is hard to know, and even with one, it is challenging to test large numbers of people). 
@@ -35,9 +35,7 @@ If you believe this model it would give estimates of the case count, portion of 
 Simon Frost has collected references that estimate R0: https://docs.google.com/spreadsheets/d/1QP5vM62ctnMRYdkQ4J5IqaOmB3hISGvYqCvnB8rBmNY/edit#gid=0 (includes the above and more) 
 
 Imperial College London's MRC Centre for Outbreak analysis report 3: https://www.imperial.ac.uk/media/imperial-college/medicine/sph/ide/gida-fellowships/Imperial-2019-nCoV-transmissibility.pdf
-They also used stochastic simulation, and case count data. This approach could be re-done in light of new data, too. 
-
-
+They also used stochastic simulation, and case count data. This approach could be re-done in light of new data. Their approach could also be extended as a forecasting tool - we could investigate how well what they predicted in the days following their report matched reality. We may need to consider how this would have been impacted by changes in public activity, and could the model be adapted to reflect this?
 
 
 ## Data
