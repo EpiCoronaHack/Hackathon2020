@@ -1,0 +1,87 @@
+---
+title: "Incubation period"
+author: "Caroline Colijn"
+date: "13/02/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(icenReg)
+library(survminer)
+```
+
+
+## Introduction
+
+The incubation period is the time between exposure and symptom onset. It gives key information about the dynamcis of an infection, particularly if symptoms are necessary for transmission. Even if they are not, the incubation period still tells us how long it might take to detect cases.
+
+The incubation period can be estimated from case reoprts where epidemiologists and health care workers have tracked down the likely exposure windows, such as when individuals were exposed to the Wuhan market.
+
+In Backer et al, the authors used 88 cases outside China. There are now many more case reports with time of symptom and some information about time of exposure - so this analysis could be repeated with updated data.  Their paper is here: https://www.medrxiv.org/content/10.1101/2020.01.27.20018986v1 and their code is available. I am using their data. BUT a great hackathon task: update this analysis (or similar) with new data! There is a lot more data now. But people are still using the original estimates. 
+
+I have done a similar analysis (to theirs) here for EpiCoronaHack.
+
+Some key differences: they used a Bayesian approach in stan, and I use survival analysis to get a single estimate. They compare several distribution assumptions; I use just one. But my method has one advantage: where they assume that people for whom there is no time of exposure have a very early exposure, I use interval and right censoring together to account for the fact that we don't know those exposure times. So instead of saying that they were early, this analysis models the fact that the exposure is unknown but must have been some time before symptom onset. 
+
+## Data 
+Read in their data: 
+
+```{r}
+data <- read_tsv(file="Backer_et_al_suppS1.tsv") 
+```
+
+Count times since Dec 31 2019 instead of dates; put exposure early if no start date given
+ and if symptom onset in Wuhan, end exposure time there. The last line uses the observation that (1) the minimum incubation time for a case is the time between the END of possible exposure and the onset of symptoms; (2) the maximum incubation time for a case is the time between the START of possible exposure and the onset of symptoms; and (3) if the exposure time is not known, then we don't know the maximum exposure time. Therefore, we set "leftbound" to be the minimum time as in point (1), and the "rightbound" to be either the max time as in (2) or 'Inf' (as in (3)). 
+
+
+## Estimation 
+
+```{r}
+mydata <- data %>% 
+  mutate(tReport = as.integer((`reporting date` %>% as.Date(format = "%m/%d/%Y")) - as.Date("2019-12-31")),
+         tSymptomOnset = as.integer((symptom_onset %>% as.Date(format = "%m/%d/%Y")) - as.Date("2019-12-31")),
+         tStartExposure = as.integer((exposure_start %>% as.Date(format = "%m/%d/%Y")) - as.Date("2019-12-31")),
+         tEndExposure = as.integer((exposure_end %>% as.Date(format = "%m/%d/%Y")) - as.Date("2019-12-31"))) %>%
+mutate(leftbound = tSymptomOnset - tEndExposure, 
+       rightbound = ifelse(!is.na(tStartExposure), tSymptomOnset - tStartExposure, Inf))
+  
+```
+
+
+Here is a plot of the "survival curve". Note that this doesn't mean literally "survival" - here, the event is symptom onset. So it is not the fraction surviving, but the fraction that has not had symptom onset yet, a time $t$ after exposure. 
+
+```{r}
+ggsurvplot(
+  fit=survfit(Surv(leftbound, rightbound, type="interval2")~1, data=mydata), 
+  xlab="Days",
+  ylab = "Overall probability of no symptoms yet")
+```
+
+This supports a median of about 6 days but it is hard to tell. 
+We can do a parametric estimate of the distribution of the incubation period using the icenReg package like this: 
+
+```{r}
+myfit = ic_par(Surv(leftbound, rightbound,type="interval2")~1, data = mydata,dist="weibull")
+getFitEsts(myfit, newdata = NULL, p=c(0.025,0.05, 0.25, 0.5, 0.75,0.95,0.975)) # great 6.266 days median 
+```
+
+Here is a plot of the estimated distribution: 
+
+```{r}
+plot(seq(0,11, by=0.05),dweibull(seq(0,11, by=0.05), shape = 3.029, scale = 7.073))
+```
+
+
+## Suggestions
+
+* Repeat this analysis and that in Backer et al, but with more data! There is a lot more available now
+
+* Explore different distributions in the fit; compare to Backer et al, and also to the Hopkins' analysis at https://github.com/HopkinsIDD/ncov_incubation#data-summary and https://www.medrxiv.org/content/10.1101/2020.02.02.20020016v1. They did something quite similar, also with survival analysis. Code is clear, and is in stan. 
+
+* Generate a dataset like Backer's but for the Singapore case reports at https://www.moh.gov.sg/2019-ncov-wuhan/past-updates. What's the incubation period there? Is it the same or different? 
+
+* Compare incubation period analyses from different places, essentially doing something like the above but with data sets from different settings. Or do a simultaneous analysis but use location as a covariate -- is the incubation period different in different settings? 
+
+* Do a Baysian version as in the original, but with more data - Backer et al's original code available at the paper link https://www.medrxiv.org/content/10.1101/2020.01.27.20018986v1. I have run it successfully. 
