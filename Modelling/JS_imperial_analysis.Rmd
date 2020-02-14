@@ -1,0 +1,207 @@
+---
+title: "Recreating the Imperial college nCoV analysis"
+author: "Jessica Stockdale"
+date: "2/11/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This is just a very quick attempt to explore their analysis. My results don't match exactly so I have probably (definitely!) made some mistakes...
+
+Uploaded to EpiCoronaHack in case it is useful for reference.
+
+## Report 1 
+
+Here we recreate the first report by Imai et al,  [available here](https://www.imperial.ac.uk/media/imperial-college/medicine/sph/ide/gida-fellowships/2019-nCoV-outbreak-report-17-01-2020.pdf). This report focuses on estimating the true number of nCoV cases up to January 12th 2020 in Wuhan. Using the number of cases detected outside China (and assuming this is fully reported), they use a simple calculation to estimate the true number of cases within China.  
+
+They apply the following approach:
+$$\text{Total number of cases} = \frac{\text{number of cases detected overseas}}{\text{probability any one case will be detected overseas}}$$
+where $$p = \text{probability any one case will be detected overseas}  = \text{daily probability of international travel}\times\text{mean time to detection of case}.$$
+This time is approximated as $$\text{mean time to detection of case} = \text{incubation period} + \text{mean time from onset of symptoms to detection}.$$
+
+The daily probability of travel is assumed to be 
+$$\text{daily probability of international travel} = \frac{\text{daily outbound international travellers from Wuhan}}{\text{catchment population of Wuhan airport}}.$$
+Actual flight data could presumably improve this last assumption. They perform a sensitivity analysis about their assumptions of the time to case detection, the catchment of Wuhan airport and the true number of international nCoV exported cases. 
+
+The only data they use is the number of international observed cases up to January 12th 2020, and I include the observed number in Wuhan too for comparison.
+```{r data}
+ncases_Wuhan = 41 # don't actually use this, but included for comparison with result
+ncases_abroad = 3
+```
+
+They initially assume the following:
+```{r assume}
+Wuhan_airport_catchment = 19000000 # 19 million
+Wuhan_daily_passengers = 3301 # reduced for lunar new year (as not happened yet - should we investigate how they chose to reduce it?)
+inf_to_det = 10.0 # length of time between infection and case detection, in days. 5/6 day incubation and 4/5 delay to detection - taken from MERS and SARS
+```
+Later, they perform a sensitivity analysis on these assumptions.
+
+Then, 
+```{r calcs}
+prob_inttravel = Wuhan_daily_passengers/Wuhan_airport_catchment
+p = prob_inttravel*inf_to_det
+print(p)
+```
+
+They note that the number of cases detected overseas is binomially distributed with parameters $p=$probability any one case will be detected overseas, and $N=$total number of cases. Therefore, $N$ is a negative binomially distributed function of the number of cases detected overseas, $N\sim NB(X=3, p=p)$. 
+
+```{r loglh}
+r = ncases_abroad
+N = seq(0,10000,1)
+N_loglh = log(gamma(r+N)*(p^r)*((1-p)^N)) - log(gamma(r)*gamma(N+1))
+X_loglh = log(choose(N,r)) + r*log(p)+(N-r)*log(1-p)
+# This is where I've probably made a mistake
+N[which.max(N_loglh )] # this is wrong? gives 169
+N[which.max(X_loglh )] # this gets me 1726. Minus the 3 international cases, this would match the 1723
+# they calculate confidence intervals also
+```
+
+They estimate a total of 1723 cases in Wuhan. 
+
+## Report 2
+
+Here we recreate the second report by Imai et al,  [available here](https://www.imperial.ac.uk/media/imperial-college/medicine/sph/ide/gida-fellowships/2019-nCoV-outbreak-report-22-01-2020.pdf). This report also focuses on estimating the true number of nCoV cases, now up to January 21st 2020 using the observed number of international cases by that date. They use the same methodology as report 1 - but note that their results should NOT be interpreted as 2 estimated case number time points (due to delays in data reporting etc.)
+
+I will not repeat the equations, since they are the same as above. However, the new data are:
+```{r data2}
+# number of observed cases internationally up to January 18th 2020:
+ncases_abroad = 7
+```
+
+As in report 1, they initially assume the following (a sensitivity analysis is performed):
+```{r assume2}
+Wuhan_airport_catchment = 19000000 # 19 million
+Wuhan_daily_passengers = 3301 # reduced for lunar new year 
+inf_to_det = 10.0 # length of time between infection and case detection, in days. 5/6 day incubation and 4/5 delay to detection - taken from MERS and SARS
+```
+
+Then, 
+```{r calcs2}
+prob_inttravel = Wuhan_daily_passengers/Wuhan_airport_catchment
+p = prob_inttravel*inf_to_det
+print(p)
+```
+
+Again,  the number of cases detected overseas is binomially distributed with parameters $p=$probability any one case will be detected overseas, and $N=$total number of cases. Therefore, $N$ is a negative binomially distributed function of the number of cases detected overseas, $N\sim NB(X=3, p=p)$. 
+
+```{r loglh2}
+r = ncases_abroad
+N = seq(0,10000,1)
+N_loglh = log(gamma(r+N)*(p^r)*((1-p)^N)) - log(gamma(r)*gamma(N+1))
+X_loglh = log(choose(N,r)) + r*log(p)+(N-r)*log(1-p)
+# the same mistake is presumably here...
+N[which.max(N_loglh )] # this is wrong? gives 165
+N[which.max(X_loglh )] # this gets me 4029
+```
+
+They estimate a total of 4000 cases in Wuhan by January 18th 2020. The only difference in methodology in report 2 is that overall uncertainty is reported as the overall range spanned by the 95% confidence intervals in their first three scenarios (assumptions as here, smaller airport catchment and shorter detection window).
+
+
+## Report 3
+
+Here we recreate the third report by Imai et al,  [available here](https://www.imperial.ac.uk/media/imperial-college/medicine/sph/ide/gida-fellowships/Imperial-2019-nCoV-transmissibility.pdf). This report focuses on estimating $R0$ for the 2019-nCoV outbreak, given their estimate of the total number of cases in Wuhan from report 2.
+
+I found it hard to get from the paper exactly how their simulations work, and indeed I get a very different answer so I am certain I have done something differently here. 
+
+$R0$ is estimated by simulating a set of epidemic trajectories (the number of cases over time) and examing how well they match with their estimated total number of cases. 
+
+They assume a negative binomial offspring distribution with dispersion parameter $k=0.16$ for the number of new infections generated by each individual. This value of $k$ is taken from SARS estimates. (This dispersion parameterisation is mostly used in ecology - $k$ replaces probability $p$). The generation time is assumed to be the same as estimated for SARS, a mean of 8.4 days. They investigate deviations from these assumptions. They also make assumptions about the number of humans originally infected by animal sources, and they test a variety of values for this. As well, a sensitivity analysis to their number of estimated cases (both ends of the 95% confidence interval are tested).  
+
+They test the following numbers of cases caused by zoonotic exposure (essentially our parameters):
+```{r init}
+init_cases = c(40,80,120,160,200)
+# in each case test for 4000, 1000 and 9700 total cases by Jan 18th (but don't need to resimulate each time)
+```
+
+```{r assume3}
+gen_time = 8.4 #(days) - I don't know if they just set this as constant, or perhaps draw it probabilistically. The wording of the paper seems to suggest is varies with mean 8.4, but this is will suffice as a simple first try. 
+```
+
+They then simulate 5000 epidemic trajectories per set of parameter values
+```{r sim}
+# All the r0 values to test out
+r0_tries = c(2.2, 2.6, 3.5) # change as needed 
+# initialise
+sim_cases <- list()
+
+# For now, let's just test one R0 value (2.6) and one initial case number (40) to try and recreate figure 1 in the report
+r0 = 2.6
+i = 1
+
+# Now we run for each set of param values (this could definitely be coded better!):
+#for (i in 1:length(init_cases)*length(r0_tries)){
+#    
+#  if (i/length(r0_tries) == ceiling(i/length(r0_tries))){
+#    r0 = r0_tries[length(r0_tries)] 
+#  }
+#  if ((i+1)/length(r0_tries) == ceiling(i/length(r0_tries))){
+#    r0 = r0_tries[length(r0_tries)-1] 
+#  }
+#  if ((i+2)/length(r0_tries) == ceiling(i/length(r0_tries))){
+#    r0 = r0_tries[length(r0_tries)-2] 
+#  }
+ 
+    # do each 5000 times
+    sim_cases[[i]] = matrix(NA, 5000,9 ) # a list of matrices with the simulation results
+    for (j in 1:5000){
+       # initialize
+       cur_cases = init_cases[ceiling(i/5)]
+       cumul_cases = cur_cases
+       time  = 0.0 # looks like they initialize at 2nd December, and run to 31st Jan say?
+       # simulate 
+       while (time<61){ # 31st Jan would be day 61
+         cur_cases =  sum(rnbinom(cur_cases, size = 0.16, mu = r0)) # so only new infectives at each time step infect others at the next
+        cumul_cases = c(cumul_cases, cur_cases)
+       # new cumulative total cases is old total + sum of new offspring
+        time  = time + gen_time
+       }
+     # save the results
+     sim_cases[[i]][j,] = cumul_cases
+    }
+    
+    
+#}
+```
+For details of the negative binomial offspring distribution, see Superspreading and the effect of individual variation on disease emergence (2005) Lloyd-Smith et al.
+
+We could use this approach for forecasting too - how well did what they predict immediately after match reality? But how could this have been impacted by change in public activity? Could we adapt our model to reflect this?
+
+We can plot these trajectories
+```{r plots}
+library(matrixStats) # you'll need this package if you don't have it
+time = c(seq(0,67.2,by=8.4))
+# again just one plot for now, could change to do lots later
+i=1
+#for (i in 1:length(init_cases)*length(r0_tries)){
+  matplot(time[-9], t(sim_cases[[i]][,-9]), type = "l")
+  # add data lines
+  abline(v=48) # january 18th = day 40 from dec 2nd
+  abline(h=4000)
+  # add mean curve
+  lines(time[-9], rowMedians(t(sim_cases[[i]][,-9])), type="l", col="black", lwd=5)#}
+```
+
+Some guesses as to why this is so different:
+
++ The plot in the paper is very smooth, rather than having jumps each 8.4 days. Perhaps they add some randomness to the generation time, or perhaps they somehow converted the simulation to a per-day basis (or perhaps they just smoothed the plot?)
+
++ A per-day or an individual-based (agent-based) simulation might make more sense, since really here we are assuming each infective infects all of their secondary infections at the same time (after 8.4 days).
+
++ The dispersion parameter leads to there often being very high numbers of secondary infectives in `rnbinom(cur_cases, size = 0.16, mu = r0)` - is this correct?
+
++ The time-frame was obtained by reading the dates off of figure 1, was there just a mistake here?
+
+
+
+
+
+
+
+
+
+
+
