@@ -48,5 +48,7 @@ new data sources!
 
 [Wu et al (2020)](https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)30260-9/fulltext#seccestitle150) and [supplementary information](https://www.thelancet.com/cms/10.1016/S0140-6736(20)30260-9/attachment/f77f1dc7-43a5-4d5e-a709-5cf061abdfdc/mmc1.pdf). Contains various data tables of line list data, social and personal non-pharmaceutical interventions implemented in China, and relevant information from SARS and MERS. 
 
+[Singaporean case data](https://www.moh.gov.sg/covid-19/past-updates). Updates from Singapore's Ministry of Health on Singaporean nCoV cases, fairly detailed. We believe that no one has analysed this data yet - they could be used to estimate the serial interval among these cases. 
+
 
 
