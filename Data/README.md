@@ -44,6 +44,9 @@ new data sources!
 
 [YVR flight data](https://www.yvr.ca/en/about-yvr/facts-and-stats). YVR airprt have some passenger data freely available on their website. In particular, 'Airlines and Destinations' lists the number of planes per week to each destination airport for the winter 2019 season. 'Traffic Update' and 'Enplaned and Deplaned Passengers' list the total number of passengers by region over time. From these documents, the number of passengers per flight could be approximately inferred. Could we use this data to help estimate the number of nCoV importations to Vancouver?
 
+[flirt](https://flirt.eha.io/) FLIRT is a network analysis tool enabling close examination of flight networks. 
+See also ecohealthalliance.org/program/flirt  There are databases that are cheaper if you can use an API eg http://aviationstack.com.
+
 ### Other data
 
 [Wu et al (2020)](https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)30260-9/fulltext#seccestitle150) and [supplementary information](https://www.thelancet.com/cms/10.1016/S0140-6736(20)30260-9/attachment/f77f1dc7-43a5-4d5e-a709-5cf061abdfdc/mmc1.pdf). Contains various data tables of line list data, social and personal non-pharmaceutical interventions implemented in China, and relevant information from SARS and MERS. 
