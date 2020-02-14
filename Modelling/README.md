@@ -36,11 +36,11 @@ Simon Frost has collected references that estimate R0: https://docs.google.com/s
 Imperial College London's MRC Centre for Outbreak analysis report 3: https://www.imperial.ac.uk/media/imperial-college/medicine/sph/ide/gida-fellowships/Imperial-2019-nCoV-transmissibility.pdf
 They also used stochastic simulation, and case count data. This approach could be re-done in light of new data. Their approach could also be extended as a forecasting tool - we could investigate how well what they predicted in the days following their report matched reality. We may need to consider how this would have been impacted by changes in public activity, and could the model be adapted to reflect this?
 
-[Imperial College London's MRC Centre for Outbreak analysis reports 1 and 2](https://www.imperial.ac.uk/media/imperial-college/medicine/sph/ide/gida-fellowships/Imperial-2019-nCoV-transmissibility.pdf). These reports investigate the under-reporting of nCoV cases in Wuhan city. Using a probabilistic approach, they infer the 'true' number of nCoV cases within Wuhan City that may have occurred by 2 given dates, by assuming the number of cases detected outside China is fully observed. The only data required is that included in the report. It would be interesting to explore and test their assumptions, or to create more up-to-date estimates using recent case count data.
+[Imperial College London's MRC Centre for Outbreak analysis reports 1 and 2](https://www.imperial.ac.uk/media/imperial-college/medicine/sph/ide/gida-fellowships/Imperial-2019-nCoV-transmissibility.pdf). These reports investigate the under-reporting of nCoV cases in Wuhan city. Using a probabilistic approach, they infer the 'true' number of nCoV cases within Wuhan City that may have occurred by 2 given dates, by assuming the number of cases detected outside China is fully observed. The only data required is that included in the report. It would be interesting to explore and test their assumptions, or to create more up-to-date estimates using recent case count data. We began an implemenation of these 3 Imperial College reports in R - see the Rmd and html files in this folder (as well as the warnings within of their accuracy).
 
 [Quilty et al, Eurosurveillance](https://www.eurosurveillance.org/content/10.2807/1560-7917.ES.2020.25.5.2000080#r9) estimate the effectiveness of airport screening at detecting travellers infected with nCoV, by stochastically simulating infected travellers. Their approach is coded up in a [Shiny app](https://cmmid-lshtm.shinyapps.io/traveller_screening/), the code for which is available [on their GutHub repo](https://github.com/bquilty25/airport_screening). 
 
 
-## Data
+
 
 
