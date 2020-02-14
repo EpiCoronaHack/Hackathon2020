@@ -30,6 +30,8 @@ new data sources!
 
 [JHU CSSE data](https://docs.google.com/spreadsheets/d/1wQVypefm946ch4XDp37uZ-wartW4V7ILdg-qYiDXUHM/htmlview?usp=sharing&sle=true#). Case count data curated by Johns Hopkins University Center for Systems Science and Engineering. Someone has formatted this to [csv on Kaggle here](https://www.kaggle.com/sudalairajkumar/novel-corona-virus-2019-dataset), and as of 11/02 the JHU team is making the data available on [Github here](https://github.com/CSSEGISandData/COVID-19).
 
+[Patrick Tung's translated data](https://towardsdatascience.com/an-r-package-to-explore-the-novel-coronavirus-590055738ad6). Blog detailing an English translation of Guangchuang Yu's (a professor of bioinformatics at Southern Medical University) R package, which includes current case counts from tencent data. This is a very new package, and we have not seen any preprints using this data yet, but it seems to be very up to date (at my last check, the data had been updated 10 minutes previously). Contains cases by country, by Chinese province and by Chinese city, which can be displayed cumulatively or by day. 
+
 ### Travel data
 
 [Tencent’s LBS (location-based services) database](https://heat.qq.com/). The daily number of Chinese domestic passengers by means of air, train and road transportation, recorded by Tencent’s LBS database. Used in the Wu et al analysis. **However** this website is written in Chinese! If anyone is willing to translate and extract the data this would be excellent.  
