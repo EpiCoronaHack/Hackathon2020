@@ -11,7 +11,7 @@ new data sources!
 
 
 
-## Links to further data
+## Links to data
 
 ### Line lists:
 
@@ -39,6 +39,8 @@ new data sources!
 [Bogoch et al 2020](https://academic.oup.com/jtm/advance-article/doi/10.1093/jtm/taaa008/5704418). Data on volume of passengers flying Wuhan to international cities Jan-Mar 2018
 
 [Travel China guide](https://www.travelchinaguide.com/china-trains/wuhan-station.htm). Information on train schedules from different Wuhan train stations (there are 4) to Chinese cities, Would need compiling, and can we be confident this is reliable? Also would need adjustments for not full trains. 
+
+[YVR flight data](https://www.yvr.ca/en/about-yvr/facts-and-stats). YVR airprt have some passenger data freely available on their website. In particular, 'Airlines and Destinations' lists the number of planes per week to each destination airport for the winter 2019 season. 'Traffic Update' and 'Enplaned and Deplaned Passengers' list the total number of passengers by region over time. From these documents, the number of passengers per flight could be approximately inferred. Could we use this data to help estimate the number of nCoV importations to Vancouver?
 
 ### Other data
 
