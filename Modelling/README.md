@@ -40,6 +40,12 @@ They also used stochastic simulation, and case count data. This approach could b
 
 [Quilty et al, Eurosurveillance](https://www.eurosurveillance.org/content/10.2807/1560-7917.ES.2020.25.5.2000080#r9) estimate the effectiveness of airport screening at detecting travellers infected with nCoV, by stochastically simulating infected travellers. Their approach is coded up in a [Shiny app](https://cmmid-lshtm.shinyapps.io/traveller_screening/), the code for which is available [on their GutHub repo](https://github.com/bquilty25/airport_screening). 
 
+## Note:
+To view the .html analysis file in this folder, append the web address with http://htmlpreview.github.com/? i.e. go to http://htmlpreview.github.io/?https://github.com/EpiCoronaHack/Hackathon2020/blob/master/Modelling/cc_Wuetal.html
+
+
+
+
 
 
 
