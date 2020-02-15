@@ -8,6 +8,9 @@
 
 [Christian Althaus' CFR estimate](https://github.com/calthaus/ncov-cfr). Christian Althaus, University of Bern, has estimated a preliminary case fatality rate based on (the previous total of) 1 observed nCoV death outside of China. Maximum likelihood estimation is used to fit a statistical model for the number of observed deaths to the data. This approach could be updated with more recent data. 
 
+## Note:
+To view the .html analysis file in this folder, append the web address with http://htmlpreview.github.com/? i.e. go to http://htmlpreview.github.io/?https://github.com/EpiCoronaHack/Hackathon2020/blob/master/Estimation/incubation.html
+
 
 
 
