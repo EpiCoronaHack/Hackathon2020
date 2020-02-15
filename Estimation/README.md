@@ -14,10 +14,16 @@ Particularly during the initial stages of an novel-pathogen outbreak, estimation
 
 [Niehus et al](https://www.medrxiv.org/content/10.1101/2020.02.13.20022707v1.full.pdf). This group from Harvard university estimate the underdetection of COVID-19 cases by assuming data collected in Singapore has near-perfect detection, and inferring from that how many cases would have been expected elsewhere by incorporating travel data. They use a Bayesian model and MCMC to do this.
 
+[Backer et al](https://www.medrxiv.org/content/10.1101/2020.01.27.20018986v2) estimate the incubation period of 2019-nCoV infections using the Kudos line list data (linked in the Github data folder) for infectives with recent travel data. By combining the date of symptom onset with travel information, they inferred possible values for the incubation period per case. R code and data are available, and this analysis has potential to be updated with newer data.
+
+[Johns Hopkins IDD team](https://www.medrxiv.org/content/10.1101/2020.02.02.20020016v1) similarly infer the incubation period from around 100 confirmed cases. They use survival analysis based on the fact that each infective will have a particular 'window' of time to have been infected. Code and data are available [from their Github repository](https://github.com/HopkinsIDD/ncov_incubation#data-summary). Could be updated with new data. 
+
+[Abbott et al](https://wellcomeopenresearch.org/articles/5-17) used a stochastic branching process simulation model (similar to that used in the Imperial College report 3) to compare different scenarios for the initial outbreak size, the duration of the initial transmission event, the serial interval, and R0. It appears they accepted simulations whose number of cases were close to the observed total cases on January 25th; this could be updated with newer case counts or, potentially, by first estimating the true number of cases, given presumed under-reporting. 
+
 
 
 ## Note:
-To view the .html analysis file in this folder, append the web address with http://htmlpreview.github.com/? i.e. go to http://htmlpreview.github.io/?https://github.com/EpiCoronaHack/Hackathon2020/blob/master/Estimation/incubation.html
+To view the .html analysis files in this folder, append the web address with http://htmlpreview.github.com/? i.e. go to http://htmlpreview.github.io/?https://github.com/EpiCoronaHack/Hackathon2020/blob/master/Estimation/incubation.html
 
 
 
