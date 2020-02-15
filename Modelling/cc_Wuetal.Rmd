@@ -1,5 +1,5 @@
 ---
-title: "An exploration of Wu et alm Lancet, 2020"
+title: "An exploration of Wu et al Lancet, 2020"
 author: "Caroline Colijn"
 date: "11/02/2020"
 output: html_document
@@ -29,21 +29,21 @@ head(wudata)
 
 I can see two options for those missing time of symptom onset: (1) use mean delay to confirmation and subtract from confirmation time (or better imputation) or (2)  exclude those cases. For now, as the simplest option, I am not including them. 
 
-It seems that Wu et al begin their model on 25 Dec 2019, so I will set up times since that date. 
+It seems that Wu et al begin their model on 1 Dec 2019, so I will set up times since that date. 
 
 ```{r}
 wudata$Date.of.symptom.onset=as.Date(wudata$Date.of.symptom.onset, format = "%m/%d/%Y")
 wudata$Date..of.confirmation = as.Date(wudata$Date..of.confirmation, format = "%m/%d/%Y") 
 colnames(wudata)=c("country.region","City","Sex","Age","Date.symptom.onset","Date.confirmation", "time.sympt.to.confn")
-wudata$symp.onset.since.dec25 = as.numeric(wudata$Date.symptom.onset-as.Date("25-12-2019",format="%d-%m-%Y"))
-wudata$confn.since.dec25=as.numeric(wudata$Date.confirmation-as.Date("25-12-2019",format="%d-%m-%Y"))
+wudata$symp.onset.since.dec01 = as.numeric(wudata$Date.symptom.onset-as.Date("01-12-2019",format="%d-%m-%Y"))
+wudata$confn.since.dec01=as.numeric(wudata$Date.confirmation-as.Date("01-12-2019",format="%d-%m-%Y"))
 ```
 
 Now for a simpler data frame that we can directly compare to model simulations: 
 
 ```{r}
-wufinal = data.frame(day=0:32,  xd = vapply(0:32, 
-  function(x) sum(wudata$symp.onset.since.dec25==x,na.rm = TRUE),
+wufinal = data.frame(day=0:57,  xd = vapply(0:57, 
+  function(x) sum(wudata$symp.onset.since.dec01==x,na.rm = TRUE),
  FUN.VALUE = 1)) 
 ```
 
@@ -71,17 +71,17 @@ wumodel <- function(t,state,pars,zinput, chuinput) {
 }
 ```
 
-Now specify the starting state, the time range, the parameters and the input functions
+Now specify the starting state, the time range, the parameters and the input functions. It seems that Wu et al assumed a total of 86 introductions from Dec 1 to Dec 31 when the market was closed, so we model a rate of 86/31 introductions per day. 
 
 ```{r}
 state=c(S=19e6,E=0, I=0)
 times = seq(0,50, by=0.1) 
 
 pars=list(N=19000000, DL = 6,R0=2.6, DI = 8.4 - 6, Lwi=3633, Liw=3546,
-       Lwc=502013, Lcw=487310, LwcCH=717226, LcwCH=810500,z=86)
+       Lwc=502013, Lcw=487310, LwcCH=717226, LcwCH=810500,z=86/31)
 
-myzinput=function(t) {ifelse(t<7,pars$z, 0) } # pass this through as zinput 
-mychuinput = function(t) {ifelse(t<17,0, 1)}  # unrealistic, see more below. 86 intro/day??!
+myzinput=function(t) {ifelse(t<31,pars$z, 0) } # pass this through as zinput 
+mychuinput = function(t) {ifelse(t<42,0, 1)} # festival starts jan 10, not modelling end
 ```
 
 Let's run the model and see what it does using the default parameters from Wu et al:
@@ -90,28 +90,27 @@ Let's run the model and see what it does using the default parameters from Wu et
 out = as.data.frame(ode(y= state, times=times,  func=wumodel, parms=pars,
           zinput=myzinput, chuinput=mychuinput))
 
-out$realtime=out$time+as.Date("25-12-2019", format="%d-%m-%Y")
+out$realtime=out$time+as.Date("01-12-2019", format="%d-%m-%Y")
 
 ggplot(data=out, aes(x=realtime,y=E))+geom_line() #
 ```
 
 
-How do the results depend on the assumption about the introductions, which is extremely high and not consistent with genomic data, and on the extremely high levels of travel? Three scenarios: 
+How do the results depend on the assumption about the introductions and on the levels of travel? Three scenarios: 
 
 ```{r}
-myzinput=function(t) {ifelse(t<7,pars["z"], 0) } # pass this through as zinput 
-mychuinput = function(t) {ifelse((t<17 & t > 30),0, 1)} 
-mytravelban=function(t) {ifelse( t > 30, 1,0)}
-times = seq(0,33, by=0.1) 
+mychuinput = function(t) {ifelse((t<42 & t > 55),0, 1)} # length of festival ~13 d
+mytravelban=function(t) {ifelse( t > 30, 1,0)} # NOT implemented but we should 
+times = seq(0,58, by=0.1) # run for 58 days. This model invalid later as no travel ban etc
 
 scens=c("baseline","8.intr.p.day","less.WC.CW")
 parlist=list()
-parlist[[1]]=c(N=19000000, DL = 6,R0=2.6, DI = 8.4 - 6, Lwi=3633, Liw=3546,
-               Lwc=502013, Lcw=487310, LwcCH=717226, LcwCH=810500,z=86) # baseline
-parlist[[2]]=c(N=19000000, DL = 6,R0=2.6, DI = 8.4 - 6, Lwi=3633, Liw=3546,
-               Lwc=502013, Lcw=487310, LwcCH=717226, LcwCH=810500,z=8) # fewer intros
-parlist[[3]]=c(N=19000000, DL = 6,R0=2.6, DI = 8.4 - 6, Lwi=3633, Liw=3546,
-               Lwc=50201.3, Lcw=48731.0, LwcCH=71722.6, LcwCH=81050.0,z=86) # same intro less travel
+parlist[[1]]=list(N=19000000, DL = 6,R0=2.6, DI = 8.4 - 6, Lwi=3633, Liw=3546,
+               Lwc=502013, Lcw=487310, LwcCH=717226, LcwCH=810500,z=86/31) # baseline
+parlist[[2]]=list(N=19000000, DL = 6,R0=2.6, DI = 8.4 - 6, Lwi=3633, Liw=3546,
+               Lwc=502013, Lcw=487310, LwcCH=717226, LcwCH=810500,z=8.6/31) # fewer intros
+parlist[[3]]=list(N=19000000, DL = 6,R0=2.6, DI = 8.4 - 6, Lwi=3633, Liw=3546,
+               Lwc=50201.3, Lcw=48731.0, LwcCH=71722.6, LcwCH=81050.0,z=86/31) # same intro,  less travel
 rm(out)
 out=list()
 for (k in 1:3) {
@@ -121,9 +120,9 @@ for (k in 1:3) {
   out[[k]]$scen=scens[k]
 }
 pars=pars=c(N=19000000, DL = 6,R0=2.6, DI = 8.4 - 6, Lwi=3633, Liw=3546,
-            Lwc=502013, Lcw=487310, LwcCH=717226, LcwCH=810500,z=86)
+            Lwc=502013, Lcw=487310, LwcCH=717226, LcwCH=810500,z=86/31)
 outall=rbind(out[[1]],out[[2]],out[[3]])
-outall$time=outall$time+as.Date("25-12-2019", format="%d-%m-%Y")
+outall$time=outall$time+as.Date("01-12-2019", format="%d-%m-%Y")
 ggplot(data=outall, aes(x=time,y=E+I,color=scen))+geom_line() #
 
 ```
@@ -131,7 +130,7 @@ ggplot(data=outall, aes(x=time,y=E+I,color=scen))+geom_line() #
 
 The model is sensitive to both of these, but seems more sensitive to the setup period.
 
-In fact, the WHO reports that the first 41 cases, most of whom were linked to the market, had symptom onset times from Dec 8 onward. This suggests that starting simulation with 86 introductions per day on Dec 25 is not realistic (and in fact, Wu et al did not explicitly state what date their model simulations began, but had these introductions until the market closed on 1 Jan 2020).  See the WHO report at  WHO report 
+In fact, the WHO reports that the first 41 cases, most of whom were linked to the market, had symptom onset times from Dec 8 onward. This suggests that starting simulation with 86 introductions over December 1-31 is not realistic (and in fact, Wu et al did not explicitly state what date their model simulations began, suggesting Dec 1 at the start of the methods section. The introductions ran in the model until the market closed on 1 Jan 2020).  See the WHO report at  WHO report 
  https://www.who.int/csr/don/12-january-2020-novel-coronavirus-china/en/. 
 
 Viral genomic data strongly suggest a single introduction (see Andrew Rambaut's post on virological.org). 
@@ -166,8 +165,8 @@ ccwumodel <- function(t,state,cpars, chuinput) {
 The data must be offset to accommodate our different starting time. 
 
 ```{r}
-toffset=as.numeric(as.Date("2019-12-25")-cpars$startTime)
-ccwufinal = data.frame(day=c(0:(toffset-1), 0:32 + toffset),
+toffset=as.numeric(as.Date("2019-12-01")-cpars$startTime)
+ccwufinal = data.frame(day=c(0:(toffset-1), 0:57 + toffset),
                        xd=c(rep(0,toffset), wufinal$xd)  ) # time is offset due to not starting on dec25 
 ```
 
@@ -245,10 +244,10 @@ ggplot(data=mp, aes(x=day,y=casecounts,color=Source))+geom_point() #
 We can use optim to estimate $R_0$ here. Wu et al used a Bayesian approach. We will get errors because optim expects more than one parameter to optimize over -- try it! Set up the function as a function of two parameters rather than one, and optimize them simultaneously. 
 
 ```{r}
-optim(2.5, function(R0) ccnegloglike(R0, cpars, ccwufinal,state,times))
+myfit=optim(2.5, function(R0) ccnegloglike(R0, cpars, ccwufinal,state,times))
 ```
 
-Plot the result - ie what does the simulation look like with R0=3.14151? 
+Plot the result - ie what does the simulation look like with R0=`r myfit$par`? 
 
 ```{r}
 cpars=list(N=19000000, DL = 6,R0=3.5, DI = 8.4 - 6, Lwi=3633, Liw=3546,
@@ -271,11 +270,11 @@ In the above, we have compared the international case counts to the model predic
 
 We also did not do any imputation where cases were missing a time of symptom onset, so we have not used some of the data. Impute the missing times using the mean time between onset and confirmation, and re-do the analysis. 
 
-The serial interval and incubation periods were fixed. How does the estimate of R0 change if these are changed? If they are simultaneously estimated, what are some of the tradeoffs?
+The serial interval and incubation periods were fixed. How does the estimate of R0 change if these are changed? If they are simultaneously estimated, what are some of the tradeoffs? What does a Bayesian analysis give as a posterior distribution for R0, given priors on the incubation period and/or serial interval? 
 
 The Poisson assumption in the likelihood does not account for possible over-dispersion; what if a negative binomial distribution is used instead - does that change the estimated value? 
 
-
+Compare results to the numbers of confirmed cases reported in Wuhan. Note, though, that the total number of confirmed cases is not the same as the prevalence in the model, because cases in the model recover (but confirmed total case counts don't go down when people recover). How does the rate of growth compare from the model to the confirmed case counts? How do the numbers compare? 
 
 
 
