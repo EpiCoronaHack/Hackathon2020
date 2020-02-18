@@ -10,7 +10,7 @@ records = set()
 for record in SeqIO.parse(fasta_file, 'fasta'):
     mers = re.search("Middle.*Homo_sapiens", record.id)
     if mers is not None:
-        records.append(record)
+        records.add(record)
 
 sampled_records = sample(list(records), N_SAMPLE)
 
