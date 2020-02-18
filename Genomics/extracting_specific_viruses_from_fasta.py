@@ -8,7 +8,7 @@ records = []
 for record in SeqIO.parse(fasta_file, 'fasta'):
     mers = re.search("^Middle", record.id)
     if mers is not None:
-        counter += 1
         records.append(record)
 
-print(counter)
+with open("mers_only.fasta", "w") as output_handle:
+    SeqIO.write(records, output_handle, "fasta")
