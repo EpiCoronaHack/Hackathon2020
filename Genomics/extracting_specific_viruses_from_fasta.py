@@ -12,8 +12,8 @@ for record in SeqIO.parse(fasta_file, 'fasta'):
     if mers is not None:
         records.append(record)
 
-sampled_records = sample(records, N_SAMPLE)
 
+sampled_records = sample(records, N_SAMPLE)
 
 with open("reduced_mers.fasta", "w+") as output_handle:
     SeqIO.write(sampled_records, output_handle, "fasta")
