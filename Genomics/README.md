@@ -1,3 +1,7 @@
+## This is a forked repo for the genomics group collaboration
+
+Please add your code, analyses, interpretation, and ideas here. Because this is a public repo, let's keep the data among us on Slack. 
+
 ## Learn about epidemic dynamics from viral sequences
 
 About 80 sequences from the outbreak are available on GISAID, and this number grows almost daily. While this is a very small fraction of the total cases to date, these sequences can provide important information that relates to the estimation, modelling and forecasting efforts.
