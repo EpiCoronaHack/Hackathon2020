@@ -1,14 +1,19 @@
 from Bio import SeqIO
+from random import sample
 import re
 
-fasta_file = "/Users/ivan/Downloads/coronaviridae.total.genbank2fasta.uniq.0125.fasta"
+N_SAMPLE = 97
+fasta_file = "coronaviridae.total.genbank2fasta.uniq.0125.fasta"
 
 records = []
 
 for record in SeqIO.parse(fasta_file, 'fasta'):
-    mers = re.search("^Middle", record.id)
+    mers = re.search("Middle.*Homo_sapiens", record.id)
     if mers is not None:
-        counter += 1
         records.append(record)
 
-print(counter)
+sampled_records = sample(records, N_SAMPLE)
+
+
+with open("reduced_mers.fasta", "w+") as output_handle:
+    SeqIO.write(sampled_records, output_handle, "fasta")
