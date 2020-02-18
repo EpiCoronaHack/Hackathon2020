@@ -17,3 +17,24 @@
  */
 
 china_airports = ["AAT","ACX","AEB","AHJ","AKU","AOG","AQG","AVA","AXF","BAV","BFJ","BHY","BPE","BPL","BPO","BPX","BSD","CAN","CGD","CGO","CGQ","CHG","CIF","CIH","CKG","CSX","CTU","CWJ","CZX","DAT","DAX","DBC","DCY","DDG","DDV","DHU","DIG","DLC","DLU","DNH","DOY","DQA","DSN","DYG","DYN","EJN","ENH","ENY","ERL","FOC","FUG","FUO","FYG","FYJ","FYN","GKW","GMQ","GOQ","GXH","GYS","GYU","HAK","HBP","HCJ","HDG","HEK","HET","HFE","HGH","HIA","HJJ","HLD","HLH","HMI","HNY","HPG","HRB","HSD","HSN","HTN","HTT","HUO","HUZ","HXD","HYN","HZG","HZH","INC","IQM","IQN","IUO","JDZ","JGD","JGN","JGS","JHG","JIC","JIQ","JIU","JJN","JMU","JNG","JNZ","JUH","JUZ","JXA","JXS","JYQ","JZH","KCA","KGT","KHG","KHN","KJH","KJI","KMG","KOW","KRL","KRY","KVN","KWE","KWL","LCX","LDS","LFQ","LHW","LJG","LLB","LLF","LLV","LNJ","LPF","LQP","LQQ","LQS","LUM","LXA","LYA","LYG","LYI","LZH","LZO","LZY","MDG","MIG","MXZ","NAO","NAY","NBS","NDG","NGB","NGQ","NHG","NKG","NKJ","NLH","NLT","NNG","NNY","NTG","NZH","NZL","OHE","PEK","PVG","PXG","PZI","QHX","RHT","RIZ","RKZ","RLK","RLZ","SHA","SHE","SHF","SHS","SJW","SQJ","SWA","SYG","SYM","SYX","SZV","SZX","TAO","TCG","TCZ","TEN","TGO","TGX","THQ","TJJ","TLQ","TNA","TNH","TSN","TVS","TVX","TXN","TYN","UCB","URC","UYN","VBL","WDS","WEC","WEF","WEH","WLI","WNH","WNZ","WUA","WUH","WUS","WUT","WUX","WUZ","WXN","WZQ","XFN","XIC","XIL","XIY","XMN","XNN","XUZ","XYW","YBP","YCU","YIC","YIE","YIH","YIN","YIW","YKH","YNJ","YNT","YNZ","YTY","YUG","YUS","YZY","ZAT","ZGN","ZHA","ZHY","ZIY","ZNG","ZQZ","ZTI","ZUH","ZUI","ZUJ","ZYI","ZYK"]
+
+getFlights(china_airports, new Date(1582012800000), new Date(1582617600000))
+
+// Query the backend for flight information
+function getFlights(airport_code_list, start_date, end_date) {
+  // This query was built by analyzing the network communication with meteor backend
+  query = {
+    discontinuedDate: {$gte: start_date},
+    effectiveDate: {$lte: end_date},
+    "departureAirport._id": {$in: airport_code_list}
+  }
+
+  // TODO: what is third parameter used for?
+  Meteor.call('flightsByQuery', query, 3000, (err,res)=> {
+    if (err) {
+      console.log("Requests was unsuccessfull.")
+      console.log(err)
+    }
+    console.log(res)
+  })
+}
