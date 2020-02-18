@@ -1,1 +1,8 @@
-Wu, F., Zhao, S., Yu, B., Chen, Y.M., Wang, W., Song, Z.G., Hu, Y., Tao, Z.W., Tian, J.H., Pei, Y.Y., Yuan, M.L., Zhang, Y.L., Dai, F. H., & Liu, Y., Wang, Q.M., Zheng, J.J., Xu, L., Holmes, E.C. and Zhang, Y. Z. (2020). A new coronavirus associated with human respiratory disease in China. Nature. https://www.ncbi.nlm.nih.gov/nuccore/MN908947
+@misc{WuF.ZhaoS.YuB.ChenY.M.WangW.SongZ.G.Hu2020,
+author = {{Wu, F., Zhao, S., Yu, B., Chen, Y.M., Wang, W., Song, Z.G., Hu}, Y. and {Tao, Z.W., Tian, J.H., Pei, Y.Y., Yuan, M.L., Zhang, Y.L., Dai}, F.H. and {Liu, Y., Wang, Q.M., Zheng, J.J., Xu, L., Holmes, E.C. and Zhang}, Y.Z.},
+booktitle = {Nature},
+mendeley-groups = {EpiCoronaHack},
+title = {{A new coronavirus associated with human respiratory disease in China}},
+url = {https://www.ncbi.nlm.nih.gov/nuccore/MN908947},
+year = {2020}
+}
