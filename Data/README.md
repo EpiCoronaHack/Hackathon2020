@@ -53,5 +53,6 @@ See also ecohealthalliance.org/program/flirt  There are databases that are cheap
 
 [Singaporean case data](https://www.moh.gov.sg/covid-19/past-updates). Updates from Singapore's Ministry of Health on Singaporean nCoV cases, fairly detailed. We believe that no one has analysed this data yet - they could be used to estimate the serial interval among these cases. 
 
+A new cluster dataset, courtesy of Dongxuan Chen and Jacco Wallinga at RIVM in the Netherlands. This data needs a Mandarin-speaking person to do re-entry (for error checking); then it could be used to re-estimate key parameters: incubation period, time between infection and symptoms. It would also be fun to create interactive network visualizations for this dataset. See files for Tianjin. 
 
 
