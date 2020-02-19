@@ -13,7 +13,7 @@ Our goals are thus to compare the phylogenetic structure and variable genomic mo
 * We downloaded all available SARS-CoV (n=??) and MERS-CoV (n=??) sequences available on Genbank
 * The tree comparison metrics we are interested in require that trees being compared have the same number of tips, therefore we randomly sampled 120 sequences for SARS and MERS 
 * Sequences were aligned in mafft (--auto)
-* The host, viral "species", sampling date, and sequence length were summarized for each of the alignments (Table 1)
+* The host, viral "species", sampling date, and sequence length were summarized for each of the alignments
 * Alignments were fed into 1) PhyML, 2) FastTree, 3) RAxML, 4) BEAST, 5) IQ tree
 * For BEAST, characters in the alignment that were non-variable were removed to reduce computational time. We applied a coalescent constant size tree model, HKY substitution model, strict clock model (mean=0.001), and ran it for 50M chains with a 10% burn-in. A most credible clade (MCC) tree was generated to summarize the posterior probability distribution of trees. 
 * Having generated 1 tree for each of the three epidemics for each of the 5 tree-building methods (15 trees total), we then applied a polynomial method to quantify/describe each of the tree structures
