@@ -17,7 +17,9 @@ flirt.eha.io uses [Meteor](https://www.meteor.com/) for its data-layer. We can e
 
 You're welcome to use only the raw data returned from the server. But if you choose to export the transformed schedules data, keep the following in mind:
 
-> The raw data contains departure and arrival time **without** the date for every flight schedule. To obtain the departure and arrival times with date, we make an assumption that none of the flights have travel duration longer than day.
+> 1. The raw data contains departure and arrival time **without** the date for every flight schedule. To obtain the departure and arrival times with date, we make an assumption that none of the flights have travel duration longer than day.
+
+> 2. The schedules with missing arrival airport information are omitted.
 
 #### Transformed Data Schema
 

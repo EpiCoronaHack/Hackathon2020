@@ -73,6 +73,10 @@ function getSchedules({ airport_code_list, start_date, end_date }, callback) {
  */
 function transform(flights, time_range) {
   schedules = flights.map(fl => {
+    // TODO: log number of omitted entries
+    // omit flight with missing arrival airport info
+    if (!fl.arrivalAirport) return null;
+
     time_range = time_range || [fl.effectiveDate, fl.discontinuedDate];
 
     // get days of week and dates that the flight is scheduled for
