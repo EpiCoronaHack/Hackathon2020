@@ -5,11 +5,14 @@ JS scripts used for fetching flight data from <https://flirt.eha.io/>
 flirt.eha.io uses [Meteor](https://www.meteor.com/) for its data-layer. We can exploit its remote procedure calls ([Meteor Methods](https://guide.meteor.com/methods.html)) and query the backend for flights leaving a given region (city, country, airport, etc).
 
 ## Usage
-
+Following instructions have been tested on chrome.
  1. Go to <https://flirt.eha.io/>
  2. Open browser console (ctrl-shift-j in chrome)
  3. Paste `index.js` script and press enter.
  4. If successful, the requested flight schedules information will be logged to console.
+ 5. Right-click the logged objects and select `Store as global variable`.
+ 6. Note the variable that object is stored into (usually `temp<N>`).
+ 7. Run `copy(temp<N>)` to copy the object to clipboard and paste it in a local file.
 
  > **Note:** For possible list of airport codes, analyze websockets connection while searching for flights through UI by country or city. Look for call to `flightsByQuery` method. You may also manually find the airport codes from other resources on the internet.
 
