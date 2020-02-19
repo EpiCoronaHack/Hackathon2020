@@ -1,5 +1,5 @@
 // Query the backend for flight information
-function getFlights({ airport_code_list, start_date, end_date }, callback) {
+function getSchedules({ airport_code_list, start_date, end_date }, callback) {
   // This query was built by analyzing the network communication with meteor backend
   query = {
     discontinuedDate: { $gte: start_date },
@@ -14,11 +14,11 @@ function getFlights({ airport_code_list, start_date, end_date }, callback) {
 /**
  * Transform flights objects recieved from server 
  * to fit the schema in README.md
- * @param {Array} flights 
+ * @param {Array} flights raw flights array from the `flightsByQuery` RPC
  * @param {Date Array} [time_range] filter between given time range [start, end]
  */
 function transform(flights, time_range) {
-  flights = flights.map(fl => {
+  schedules = flights.map(fl => {
     time_range = time_range || [fl.effectiveDate, fl.discontinuedDate];
 
     // get days of week and dates that the flight is scheduled for
@@ -56,8 +56,7 @@ function transform(flights, time_range) {
     }
 
     // simple object key mapping
-    flight = {
-      ...flight,
+    schedule = {
       flight_id: `${fl.carrier}${fl.flightNumber}`,
       total_seats: fl.totalSeats,
       days_scheduled,
@@ -88,10 +87,10 @@ function transform(flights, time_range) {
       
     }
 
-    return flight;
+    return schedule;
   });
 
-  return flights.filter(flight => flight != null);
+  return schedules.filter(schedule => schedule != null);
 }
 
 /**
