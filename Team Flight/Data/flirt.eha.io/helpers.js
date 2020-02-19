@@ -8,7 +8,7 @@ function getFlights({ airport_code_list, start_date, end_date }, callback) {
   }
 
   // TODO: what is third parameter used for?
-  Meteor.call('flightsByQuery', query, 3000, callback)
+  Meteor.call('flightsByQuery', query, 3000, callback);
 }
 
 }
