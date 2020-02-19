@@ -51,5 +51,29 @@ function transform(flights) {
     return flight;
   });
 
-  return flights;
+/**
+ * Generate list of dates between given time range.
+ * Then filter out dates based on `filter_weekdays` list.
+ * 
+ * @param {Date Array} range given time range [start, end]
+ * @param {Array} [filter_weekdays] given time range [start, end]
+ */
+function generateDates(range, weekdays_to_kept) {
+  // keep all weekdays by default
+  weekdays_to_kept = weekdays_to_kept || Array(8).fill().map(() => true);
+  // Truncate day time from range
+  range = range.map(date => new Date(date.toDateString()));
+
+  dates = []
+  let date = new Date(range[0]);
+  let day = date.getDay();
+  // iterate through all days in given range and keep only specified weekdays
+  while(date <= range[1]) {
+    if (weekdays_to_kept[day]) dates.push(new Date(date));
+    // increment to next day
+    date = new Date(date.setDate(date.getDate() + 1));
+    day = date.getDay();
+  }
+
+  return dates;
 }
