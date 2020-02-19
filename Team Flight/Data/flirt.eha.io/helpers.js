@@ -39,7 +39,7 @@ function transform(flights, time_range) {
     flight = {
       ...flight,
       flight_id: `${fl.carrier}${fl.flightNumber}`,
-      total_seats: fl.total_seats,
+      total_seats: fl.totalSeats,
       effective_date: fl.effectiveDate,
       discontinued_date: fl.discontinuedDate,
       departure: {
