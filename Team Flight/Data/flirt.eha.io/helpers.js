@@ -22,7 +22,7 @@ function transform(flights, time_range) {
     time_range = time_range || [fl.effectiveDate, fl.discontinuedDate];
 
     // get days of week and dates that the flight is scheduled for
-    days_scheduled = []
+    days_scheduled = [];
     for (let i = 1; i <= 7; i++) {
       days_scheduled[i] = fl[`day${i}`];
     }
@@ -30,15 +30,37 @@ function transform(flights, time_range) {
 
     // if flight not running within the specified time_range
     if (!dates_scheduled.length) return null;
-    flight = {
-      days_scheduled,
-    };
+
+    // concatenate depature time with dates_scheduled to get departure times
+    departure_times = [];
+    for (i in dates_scheduled) {
+      departure_times.push(
+        new Date(dates_scheduled[i].setHours(...fl.departureTimeUTC.split(':')))
+      );
+    }
+
+    // concatenate arrival time with dates_scheduled to get arrival times
+    arrival_times = [];
+    for (i in dates_scheduled) {
+      let date = dates_scheduled[i];
+      // Because flight schedules only contain departure/arrival times without
+      // the date, we make an assumption that no direct flight travels longer
+      // than 24-hours. Thus, if arrival time is less than departure time, its
+      // day will increment by exactly 1.
+      if (fl.arrivalTimeUTC <= fl.departureTimeUTC)
+        date = new Date(date.setDate(date.getDate() + 1));
+
+      arrival_times.push(
+        new Date(date.setHours(...fl.arrivalTimeUTC.split(':')))
+      );
+    }
 
     // simple object key mapping
     flight = {
       ...flight,
       flight_id: `${fl.carrier}${fl.flightNumber}`,
       total_seats: fl.totalSeats,
+      days_scheduled,
       effective_date: fl.effectiveDate,
       discontinued_date: fl.discontinuedDate,
       departure: {
@@ -46,6 +68,7 @@ function transform(flights, time_range) {
         city: fl.departureAirport.city,
         country: fl.departureAirport.countryName,
         global_region: fl.departureAirport.globalRegion,
+        times: departure_times,
         loc: fl.loc,
       },
       arrival: {
@@ -53,6 +76,7 @@ function transform(flights, time_range) {
         city: fl.arrivalAirport.city,
         country: fl.arrivalAirport.countryName,
         global_region: fl.arrivalAirport.globalRegion,
+        times: arrival_times,
         loc: fl.loc,
       },
     }
