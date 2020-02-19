@@ -13,11 +13,11 @@ function getSchedules({ airport_codes, start_date, end_date, limit }, callback) 
   Meteor.call('flightsByQuery', query, limit, callback);
 }
 // Get total number of flight schedules in the database
-function getSchedulesCount({ airport_code_list, start_date, end_date }, callback) {
+function getSchedulesCount({ airport_codes, start_date, end_date }, callback) {
   query = {
     discontinuedDate: { $gte: start_date },
     effectiveDate: { $lte: end_date },
-    "departureAirport._id": { $in: airport_code_list }
+    "departureAirport._id": { $in: airport_codes }
   };
   let count = 0;
   Meteor.call('flightsByQuery', query, count, callback);
