@@ -40,7 +40,7 @@ You're welcome to use only the raw data returned from the server. But if you cho
       coordinates,    [list] in form [longitude, latitude]
     },
     days_scheduled    [list] boolean array corresponding to whether a flight
-                             scheduled on a given weekday or not
+                             is scheduled on a given weekday or not
 
   }
   arrival: {

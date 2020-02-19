@@ -9,10 +9,8 @@ getSchedules({
   start_date: new Date('Feb 18 2020'),
   end_date: new Date('Feb 18 2020'),
 }, (err, res) => {
-  if (err) {
-    console.log('Requests was unsuccessfull.')
-    console.log(err)
-  }
+  if (err) console.log('Requests was unsuccessful', err);
+
   console.log('Raw Data', res);
   schedules = transform(res.flights, [start_date, end_date]);
   console.log('Transform Data', schedules);
