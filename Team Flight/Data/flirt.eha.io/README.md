@@ -29,6 +29,8 @@ You're welcome to use only the raw data returned from the server. But if you cho
   total_seats,
   effective_date,     flight authorized to run on specified schedule
   discontinued_date,  flight discontinued to run on specified schedule
+  days_scheduled      [list] boolean array corresponding to whether a flight
+                             is scheduled on a given weekday or not
   departure: {
     airport_code,
     city,
@@ -39,8 +41,6 @@ You're welcome to use only the raw data returned from the server. But if you cho
       type,
       coordinates,    [list] in form [longitude, latitude]
     },
-    days_scheduled    [list] boolean array corresponding to whether a flight
-                             is scheduled on a given weekday or not
 
   }
   arrival: {
