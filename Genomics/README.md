@@ -1,23 +1,24 @@
 ## This is a forked repo for the genomics group collaboration
 
-Please add your code, analyses, interpretation, and ideas here. Because this is a public repo, let's keep the data among us on Slack. 
+Please add your code, analyses, interpretation, and ideas here. Because this is a public repo, please do not share the SARS-CoV-2 sequences that were obtained from GISAID on this github.
 
-## Learn about epidemic dynamics from viral sequences
+## Objectives
 
-About 80 sequences from the outbreak are available on GISAID, and this number grows almost daily. While this is a very small fraction of the total cases to date, these sequences can provide important information that relates to the estimation, modelling and forecasting efforts.
+Because there are so few sequences available from the COVID-19 epidemic relative to the prevalence, we are hesitant to investigate epidemiological parameters using this data alone. Rather, by placing SARS-CoV-2 in context within the greater Coronaviridae family, we hope to provide insights into how this outbreak compares to other zoonotic coronaviruses.
 
-For example, there is very low genetic diversity among the outbreak sequences, with many sequences having 0, 1 or 2 single nucleotide differences from other outbreak sequences. If there had been many separate introductions into humans from an animal reservoir of the virus, we would expect more genetic diversity. 
+Our goals are thus to compare the phylogenetic structure and variable genomic motifs between SARS-CoV-2, MERS-CoV, and SARS-CoV. By comparing the tree structure between these epidemics, we will be able to test whether SARS-CoV-2 more closely resembles MERS-CoV or SARS-CoV in its branching pattern, which is a product of both viral transmission and sampling of the epidemic (though they are difficult to disentangle). We proposed to generate trees of these conoravirus epidemics using different tree-building algorithms so that we could compare the evolutionary dynamics between them. As an complementary analysis, we wanted to look at variable regions within the gene coding for the spike protein to evaluate patterns common to zoonotic coronaviruses. 
 
-If we know the rate of substitution (how long does it take for genetic variation to be acquired?) then we can use levels of diversity to estimate the time of the most recent common ancestor of the outbreak sequences. This sheds light on when the virus likely first emerged, or at least, when it first emerged and became the cause of the current outbreak. 
+## Methodology
+** We pulled all available sequences from GISAID for SARS-CoV-2 (n=??) that we then pared down to those that were full genomes from human samples (n=120)
+** We downloaded all available SARS-CoV (n=??) and MERS-CoV (n=??) sequences available on Genbank
+** The tree comparison metrics we are interested in require that trees being compared have the same number of tips, therefore we randomly sampled 120 sequences for SARS and MERS 
+** Sequences were aligned in mafft (--auto)
+** The host, viral "species", sampling date, and sequence length were summarized for each of the alignments (Table 1)
+** Alignments were fed into 1) PhyML, 2) FastTree, 3) RAxML, 4) BEAST, 5) IQ tree
+** For BEAST, characters in the alignment that were non-variable were removed to reduce computational time. We applied a coalescent constant size tree model, HKY substitution model, strict clock model (mean=0.001), and ran it for 50M chains with a 10% burn-in. A most credible clade (MCC) tree was generated to summarize the posterior probability distribution of trees. 
+** Having generated 1 tree for each of the three epidemics for each of the 5 tree-building methods (15 trees total), we then applied a polynomial method to quantify/describe each of the tree structures
+** The similarity of the trees was then compared in a 1) n by n matrix heatmap, 2) a dimensionality reduction plot (either t-SNE or MDS).
+** We used these statistics and plots to test the hypothesis that SARS-CoV-2 is more similar to SARS-CoV than it is to MERS-CoV
+** We also wanted to test the hypothesis that these relationships would be consistent within any of the 5 tree building algorithms
+** Finally, we were interested to see if the tree structure was significantly different between the 5 algorithms for a given epidemic/alignment
 
-Viral sequences can also be used to infer the past effective population size using coalescent theory, and to estimate the basic reproduction number using simple branching process models. These estimates are performed in the Bayesian Evolutionary Analysis by Sampling Trees (BEAST) software. There are many BEAST tutoraials online (including the one linked below). 
-
-Data will be supplied upon request. We cannot post GISAID viral sequences due the data sharing agreement with GISAID. 
-
-## How to Perform Sequence Alignment on 2019-nCoV with MAFFT:
-
-https://towardsdatascience.com/how-to-perform-sequence-alignment-on-2019-ncov-with-mafft-96c1944da8c6
-
-## Phylodynamic Analysis of 2019-nCoV using BEAST 
-
-http://virological.org/t/phylodynamic-analysis-90-genomes-12-feb-2020/356
