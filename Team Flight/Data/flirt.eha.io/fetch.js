@@ -17,3 +17,4 @@ getSchedules({
   schedules = transform(res.flights);
   console.log('Transform Data', schedules);
 });
+console.log('Waiting for data...');
