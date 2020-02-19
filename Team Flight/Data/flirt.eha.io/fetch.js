@@ -25,18 +25,19 @@
 // All the airports in China
 airport_codes = ["AAT"];
 
-// global flights variable containing fetched data from server
-let flights;
+// global variable containing transformed schedules data fitting the schema in README.md
+let schedules;
 
-getFlights({
+getSchedules({
   airport_code_list: airport_codes,
   start_date: new Date('Feb 18 2020'),
   end_date: new Date('Feb 18 2020'),
 }, (err, res) => {
   if (err) {
-    console.log("Requests was unsuccessfull.")
+    console.log('Requests was unsuccessfull.')
     console.log(err)
   }
-  console.log(res)
-  flights = res.flights
+  console.log('Raw Data', res);
+  schedules = transform(res.flights);
+  console.log('Transform Data', schedules);
 });
