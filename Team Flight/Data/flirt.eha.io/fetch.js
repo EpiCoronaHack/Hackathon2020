@@ -7,7 +7,7 @@ let start_date = new Date('Nov 1 2019');
 let end_date = new Date('Feb 19 2020');
 let schedules;
 
-getSchedules({ airport_code_list: airport_codes, start_date, end_date, },
+getSchedules({ airport_codes, start_date, end_date, limit: 3000 },
   (err, res) => {
     if (err) console.log('Requests was unsuccessful', err);
 
