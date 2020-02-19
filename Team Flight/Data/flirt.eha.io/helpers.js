@@ -59,7 +59,7 @@ function transform(flights, time_range) {
       );
     }
 
-    // simple object key mapping
+    // create schedule object
     schedule = {
       flight_id: `${fl.carrier}${fl.flightNumber}`,
       total_seats: fl.totalSeats,

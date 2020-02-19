@@ -23,7 +23,7 @@ You're welcome to use only the raw data returned from the server. But if you cho
 
 #### Transformed Data Schema
 
-```json
+```console
 {
   flight_id,
   total_seats,
