@@ -21,19 +21,18 @@ function transform(flights, time_range) {
   flights = flights.map(fl => {
     time_range = time_range || [fl.effectiveDate, fl.discontinuedDate];
 
-    flight = {}
-
     // get days of week and dates that the flight is scheduled for
     days_scheduled = []
     for (let i = 1; i <= 7; i++) {
-      days_scheduled[i] = fl[`day${i}`]
+      days_scheduled[i] = fl[`day${i}`];
     }
     dates_scheduled = generateDates(time_range, days_scheduled);
 
-    // if flight not running within the specified time_range 
-    if (!dates_scheduled.length) return null
-
-    flight.days_scheduled = days_scheduled;
+    // if flight not running within the specified time_range
+    if (!dates_scheduled.length) return null;
+    flight = {
+      days_scheduled,
+    };
 
     // simple object key mapping
     flight = {
