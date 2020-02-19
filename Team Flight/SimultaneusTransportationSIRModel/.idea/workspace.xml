@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="simultaneus_transportation_seiv_model" targetName="simultaneus_transportation_seiv_model" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8441c14d-d8cc-41c7-a661-bb1658892a89" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="$PROJECT_DIR$/.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="HiqdrtHG" />
+  </component>
+  <component name="ProjectId" id="1Y0ANGom9uQUD08uM9lFcesjm1E" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/CMakeLists.txt" />
+  </component>
+  <component name="RunManager">
+    <configuration name="simultaneus_transportation_seiv_model" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="simultaneus_transportation_seiv_model" TARGET_NAME="simultaneus_transportation_seiv_model" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="simultaneus_transportation_seiv_model" RUN_TARGET_NAME="simultaneus_transportation_seiv_model">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8441c14d-d8cc-41c7-a661-bb1658892a89" name="Default Changelist" comment="" />
+      <created>1582069095393</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1582069095393</updated>
+      <workItem from="1582069096972" duration="23007000" />
+      <workItem from="1582152087941" duration="1152000" />
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="364" y="230" key="com.intellij.ide.util.TipDialog" timestamp="1582152204019">
+      <screen x="0" y="36" width="1366" height="732" />
+    </state>
+    <state x="364" y="230" key="com.intellij.ide.util.TipDialog/0.36.1366.732@0.36.1366.732" timestamp="1582152204019" />
+    <state x="341" y="36" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1582134209603">
+      <screen x="0" y="36" width="1366" height="732" />
+    </state>
+    <state x="341" y="36" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.36.1366.732@0.36.1366.732" timestamp="1582134209603" />
+    <state x="406" y="36" width="554" height="693" key="refactoring.ChangeSignatureDialog" timestamp="1582136960942">
+      <screen x="0" y="36" width="1366" height="732" />
+    </state>
+    <state x="406" y="36" width="554" height="693" key="refactoring.ChangeSignatureDialog/0.36.1366.732@0.36.1366.732" timestamp="1582136960942" />
+    <state x="347" y="178" key="run.anything.popup" timestamp="1582135590192">
+      <screen x="0" y="36" width="1366" height="732" />
+    </state>
+    <state x="347" y="178" key="run.anything.popup/0.36.1366.732@0.36.1366.732" timestamp="1582135590192" />
+  </component>
+</project>
