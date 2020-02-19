@@ -116,9 +116,9 @@ function transform(flights, time_range) {
  * @param {DateArray} range given time range [start, end]
  * @param {Array} [filter_weekdays] given time range [start, end]
  */
-function generateDates(range, weekdays_to_kept) {
+function generateDates(range, weekdays_to_keep) {
   // keep all weekdays by default
-  weekdays_to_kept = weekdays_to_kept || Array(8).fill().map(() => true);
+  weekdays_to_keep = weekdays_to_keep || Array(8).fill().map(() => true);
   // Truncate day time from range
   range = range.map(date => new Date(date.toDateString()));
 
@@ -127,7 +127,7 @@ function generateDates(range, weekdays_to_kept) {
   let day = date.getDay();
   // iterate through all days in given range and keep only specified weekdays
   while(date <= range[1]) {
-    if (weekdays_to_kept[day]) dates.push(new Date(date));
+    if (weekdays_to_keep[day]) dates.push(new Date(date));
     // increment to next day
     date = new Date(date.setDate(date.getDate() + 1));
     day = date.getDay();
