@@ -96,13 +96,6 @@ function transform(flights, time_range) {
       },
     }
 
-    // TODO days
-
-    // Restrict departure/arrival and times
-    if (time_range) {
-      
-    }
-
     return schedule;
   });
 
