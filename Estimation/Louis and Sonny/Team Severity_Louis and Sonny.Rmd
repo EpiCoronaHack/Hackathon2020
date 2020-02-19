@@ -1,0 +1,140 @@
+---
+title: "Team Severity"
+author: "Louis Arsenault-Mahjoubi, Sonny Min"
+date: "2/18/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(statsr)
+library(ggplot2)
+library(imager)
+```
+
+```{r}
+# Logistic Regression
+data1 = read.csv("cfr_dataset.csv", na.strings="", sep=";")
+names(data1)[1] = "source"
+
+for (i in 1:nrow(data1)){
+  if (is.na(data1$death_date[i]) == TRUE){
+    data1$dead[i] = 0 # if the person is alive
+  } else {data1$dead[i] = 1} # if the person is dead
+}
+
+data1$gender = as.factor(data1$gender)
+
+mylogit = glm(data = data1, dead ~ age, family="binomial") # gender was not significant
+odds = exp(mylogit$coefficients[1] + mylogit$coefficients[2] * seq(1, 120, by=1) )
+probs = odds/(1+odds)
+ggplot(mapping = aes(x = seq(1, 120), y = probs))+
+  geom_line(col = "red", lwd=2)+
+  ggtitle("Age vs. Probability of death from CoV")+
+  xlab("Age")+
+  ylab("Probability")
+```
+
+```{r}
+# Report 4 simulation
+expected_death = function(c){
+  alpha = 1/(s^2)
+  beta = 1/(m*s^2)
+  expected_D = c*exp(r*t)*beta^alpha/((beta+r)^alpha)
+  return(expected_D)
+}
+
+m = 14.30555; s = 0.53; c = 0.05; r = 0.14; tau = 5
+t = seq(from = 1, to = 32, by = 1)
+test = cumsum(expected_death(c))
+c1 = seq(from=0.01, to=0.11, by=0.02)
+
+test2 = sapply(X=c1, expected_death)
+
+test3 = matrix(NA, nrow=length(t), ncol=ncol(test2))
+for (i in 1:ncol(test2)){
+  test3[,i] = cumsum(test2[,i])
+}
+
+# plot(test, type = 'l', xlim = c(-1,32), col="red", lwd=2)
+matplot(test3, type="l",xlim = c(-1,32), lwd=2, xlab="Days since onset", ylab="Expected number of death(cumulative)")
+legend(title="Case Fatality Rate", x = 0, y= 10, legend = c(c1), lty=seq(1,6), col=seq(1,6))
+
+```
+
+
+```{r, include=FALSE}
+# Mean, sd, ci
+onset_death_post = bayes_inference(y = onset_death, data = data1, statistic = "mean", type = "ci",  
+                              prior_family = "ref", mu_0 = 20, method = "theoretical", cred_level = 0.95)
+o_d_mean = onset_death_post$post_mean
+o_d_sd = onset_death_post$post_sd
+o_d_ci = onset_death_post$ci
+
+onset_recov_post = bayes_inference(y = onset_today, data = data1, statistic = "mean", type = "ci",  
+                              prior_family = "ref", mu_0 = 20, method = "theoretical", cred_level = 0.95)
+o_r_mean = onset_recov_post$post_mean
+o_r_sd = onset_recov_post$post_sd
+o_r_ci = onset_recov_post$ci
+
+sumry = matrix(c(o_d_mean, o_d_sd, o_d_ci, o_r_mean, o_r_sd, o_r_ci), 
+               nrow=2, byrow=TRUE, 
+               dimnames = list(c("onset-death","onset-recovery"),
+                               c("mean","sd","2.5%","97.5")))
+# post_mean days from onset of symptoms to today(19 Feb 2020), death, and recovery, respectively with c.i
+print(sumry)
+```
+
+```{r}
+CFR_likelihood = function(data, c, m_or,s_or,m_od,s_od){
+  likelihood = c()
+  for (i in 1:length(data[,1])){
+  # if patient is dead at time t
+    if (data$dead[i] == 1){
+    t = data$onset_death[i] #time from onset till death
+    alpha_d = 1/(s_od^2)
+    beta_d = 1/(m_od*s_od^2)
+    p_d = c*(pgamma(t+1, shape = alpha_d, rate = beta_d)-pgamma(t, shape = alpha_d, rate = beta_d))
+    likelihood = c(likelihood, p_d)
+     }
+    else{
+    # if patient is alive at time current:
+    t_ON =  data$onset_today[i] #time from onset of patient until current time
+    alpha_r = 1/(s_or^2)
+    beta_r = 1/(m_or*s_or^2)
+    p_r = (1-c)*pgamma(t_ON, shape = alpha_r, rate = beta_r, lower.tail = FALSE)+c*(pgamma(t_ON, shape = alpha_d, rate = beta_d, lower.tail = FALSE))
+    likelihood = c(likelihood, p_r)
+    } 
+  }
+  return(prod(likelihood))
+}
+```
+
+```{r}
+# Overall CFR
+m_od = 14.30555
+s_od = 0.53
+m_or=13.86
+s_or=.426
+
+c = seq(from = 1, to = 15, by = 0.1)
+test = lapply(c, CFR_likelihood,data=data1, m_od=m_od,s_od=s_od,m_or=m_or,s_or=s_or)
+plot(y = test[], x = c, type = 'l', ylab = 'likelihood', xlab = ' CFR(%)', xlim=c(1,20))
+# Overall CFR = about 14%
+```
+
+```{r}
+# International CFR
+interna = data1[data1$source=="international",]
+
+m_od = 22.3
+s_od = 0.42
+m_or = 22.2
+s_or = .45
+
+test2 = lapply(c, CFR_likelihood,data=interna, m_or=m_or,s_or=s_or,m_od=m_od,s_od=m_od)
+c = seq(from = 1, to = 15, by = 0.1)
+plot(y = test2, x = c, type = 'l', ylab = 'likelihood', xlab = ' CFR(%)')
+
+```
