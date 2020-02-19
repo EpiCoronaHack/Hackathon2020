@@ -135,6 +135,6 @@ s_or = .45
 
 test2 = lapply(c, CFR_likelihood,data=interna, m_or=m_or,s_or=s_or,m_od=m_od,s_od=m_od)
 c = seq(from = 1, to = 15, by = 0.1)
-# plot(y = test2, x = c, type = 'l', ylab = 'likelihood', xlab = ' CFR(%)')
-plot(load.image("cfr likelihood INT.png"), axes=FALSE)
+plot(y = test2, x = c, type = 'l', ylab = 'likelihood', xlab = ' CFR(%)')
+
 ```
