@@ -1,5 +1,8 @@
-// Query the backend for flight information
-function getSchedules({ airport_code_list, start_date, end_date }, callback) {
+/**
+ * Query the backend for flight information
+ * @param {Number} limit number of records fetched
+ */
+function getSchedules({ airport_code_list, start_date, end_date, limit }, callback) {
   // This query was built by analyzing the network communication with meteor backend
   query = {
     discontinuedDate: { $gte: start_date },
@@ -7,8 +10,7 @@ function getSchedules({ airport_code_list, start_date, end_date }, callback) {
     "departureAirport._id": { $in: airport_code_list }
   }
 
-  let count = 3000;
-  Meteor.call('flightsByQuery', query, count, callback);
+  Meteor.call('flightsByQuery', query, limit, callback);
 }
 
 // Get total number of flight schedules in the database
