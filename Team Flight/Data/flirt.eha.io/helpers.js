@@ -17,10 +17,27 @@ function getFlights({ airport_code_list, start_date, end_date }, callback) {
  * @param {Array} flights 
  * @param {Date Array} [time_range] filter between given time range [start, end]
  */
-function transform(flights) {
-  flights.map(fl => {
+function transform(flights, time_range) {
+  flights = flights.map(fl => {
+    time_range = time_range || [fl.effectiveDate, fl.discontinuedDate];
+
+    flight = {}
+
+    // get days of week and dates that the flight is scheduled for
+    days_scheduled = []
+    for (let i = 1; i <= 7; i++) {
+      days_scheduled[i] = fl[`day${i}`]
+    }
+    dates_scheduled = generateDates(time_range, days_scheduled);
+
+    // if flight not running within the specified time_range 
+    if (!dates_scheduled.length) return null
+
+    flight.days_scheduled = days_scheduled;
+
     // simple object key mapping
     flight = {
+      ...flight,
       flight_id: `${fl.carrier}${fl.flightNumber}`,
       total_seats: fl.total_seats,
       effective_date: fl.effectiveDate,
@@ -50,6 +67,9 @@ function transform(flights) {
 
     return flight;
   });
+
+  return flights.filter(flight => flight != null);
+}
 
 /**
  * Generate list of dates between given time range.
