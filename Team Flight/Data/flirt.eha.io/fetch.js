@@ -14,7 +14,7 @@ getSchedules({
     console.log(err)
   }
   console.log('Raw Data', res);
-  schedules = transform(res.flights);
+  schedules = transform(res.flights, [start_date, end_date]);
   console.log('Transform Data', schedules);
 });
 console.log('Waiting for data...');
