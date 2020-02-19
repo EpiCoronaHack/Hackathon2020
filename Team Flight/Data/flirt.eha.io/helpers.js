@@ -5,10 +5,12 @@
  */
 function getSchedules({ airport_codes, start_date, end_date, limit }, callback) {
   // This query was built by analyzing the network communication with meteor backend
+  // Commented fields are likely not indexed in mongo, resulting in huge computation time
   query = {
-    discontinuedDate: { $gte: start_date },
-    effectiveDate: { $lte: end_date },
-    "departureAirport._id": { $in: airport_codes }
+    "departureAirport._id": { $in: airport_codes },
+    // discontinuedDate: { $gte: start_date },
+    // effectiveDate: { $lte: end_date },
+    // arrivalAirport: { $exists: true },
   };
   Meteor.call('flightsByQuery', query, limit, callback);
 }
