@@ -19,7 +19,7 @@ function getFlights({ airport_code_list, start_date, end_date }, callback) {
  */
 function transform(flights) {
   flights.map(fl => {
-    //     
+    // simple object key mapping
     flight = {
       flight_id: `${fl.carrier}${fl.flightNumber}`,
       total_seats: fl.total_seats,
@@ -39,6 +39,13 @@ function transform(flights) {
         global_region: fl.arrivalAirport.globalRegion,
         loc: fl.loc,
       },
+    }
+
+    // TODO days
+
+    // Restrict departure/arrival and times
+    if (time_range) {
+      
     }
 
     return flight;
