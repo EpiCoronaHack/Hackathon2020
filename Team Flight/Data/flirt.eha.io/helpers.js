@@ -14,6 +14,7 @@ function getSchedules({ airport_codes, start_date, end_date, limit }, callback) 
   };
   Meteor.call('flightsByQuery', query, limit, callback);
 }
+
 // Get total number of flight schedules in the database
 function getSchedulesCount({ airport_codes, start_date, end_date }, callback) {
   query = {
@@ -24,6 +25,7 @@ function getSchedulesCount({ airport_codes, start_date, end_date }, callback) {
   let count = 0;
   Meteor.call('flightsByQuery', query, count, callback);
 }
+
 /**
  * Transform flights objects recieved from server
  * to fit the schema in README.md
@@ -91,6 +93,7 @@ function transform(flights, time_range) {
   });
   return schedules.filter(schedule => schedule != null);
 }
+
 /**
  * Generate list of dates between given time range.
  * Then filter out dates based on `filter_weekdays` list.
