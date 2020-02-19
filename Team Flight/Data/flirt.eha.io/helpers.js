@@ -15,7 +15,7 @@ function getSchedules({ airport_code_list, start_date, end_date }, callback) {
  * Transform flights objects recieved from server 
  * to fit the schema in README.md
  * @param {Array} flights raw flights array from the `flightsByQuery` RPC
- * @param {Date Array} [time_range] filter between given time range [start, end]
+ * @param {DateArray} [time_range] filter between given time range [start, end]
  */
 function transform(flights, time_range) {
   schedules = flights.map(fl => {
@@ -101,7 +101,7 @@ function transform(flights, time_range) {
  * Generate list of dates between given time range.
  * Then filter out dates based on `filter_weekdays` list.
  * 
- * @param {Date Array} range given time range [start, end]
+ * @param {DateArray} range given time range [start, end]
  * @param {Array} [filter_weekdays] given time range [start, end]
  */
 function generateDates(range, weekdays_to_kept) {
