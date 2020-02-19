@@ -2,7 +2,7 @@
 
 JS scripts used for fetching flight data from <https://flirt.eha.io/>
 
-flirt.eha.io uses [Meteor](https://www.meteor.com/) for its data-layer. We can exploit its remote procedure ([Meteor Methods](https://guide.meteor.com/methods.html)) and query the backend for flights leaving a given region (city, country, airport, etc).
+flirt.eha.io uses [Meteor](https://www.meteor.com/) for its data-layer. We can exploit its remote procedure calls ([Meteor Methods](https://guide.meteor.com/methods.html)) and query the backend for flights leaving a given region (city, country, airport, etc).
 
 ## Usage
 
