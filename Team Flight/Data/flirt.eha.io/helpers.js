@@ -1,13 +1,14 @@
 /**
  * Query the backend for flight information
+ * @param {StringArray} airport_codes list of iata airport codes
  * @param {Number} limit number of records fetched
  */
-function getSchedules({ airport_code_list, start_date, end_date, limit }, callback) {
+function getSchedules({ airport_codes, start_date, end_date, limit }, callback) {
   // This query was built by analyzing the network communication with meteor backend
   query = {
     discontinuedDate: { $gte: start_date },
     effectiveDate: { $lte: end_date },
-    "departureAirport._id": { $in: airport_code_list }
+    "departureAirport._id": { $in: airport_codes }
   }
 
   Meteor.call('flightsByQuery', query, limit, callback);
