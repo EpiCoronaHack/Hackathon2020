@@ -1,0 +1,4 @@
+# TODO: add descriptions for each package
+asyncio
+websockets
+json
