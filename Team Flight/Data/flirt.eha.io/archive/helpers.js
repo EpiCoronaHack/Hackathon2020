@@ -22,8 +22,9 @@ function getSchedulesCount({ airport_codes, start_date, end_date }, callback) {
     effectiveDate: { $lte: end_date },
     "departureAirport._id": { $in: airport_codes }
   };
-  let count = 0;
-  Meteor.call('flightsByQuery', query, count, callback);
+  // Prevent fetching the objects data
+  let limit = 1;
+  Meteor.call('flightsByQuery', query, limit, callback);
 }
 
 /**
