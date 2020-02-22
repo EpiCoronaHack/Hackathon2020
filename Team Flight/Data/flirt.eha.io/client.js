@@ -126,4 +126,15 @@
     } while (true);
     console.log('First ID is currId');
   }
+
+
+  const HOST = '127.0.0.1';
+  const PORT = 4000;
+
+  const socket = await initConnection(HOST, PORT);
+  beginFetching({
+    initialId: '5d2cb2e50c8ec0b8bd995018',
+    pageSize: 200,
+    storageConnection: socket,
+  });
 })();
