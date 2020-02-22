@@ -30,5 +30,17 @@ socket = new WebSocket('ws://127.0.0.1:3000');
     });
   }
 
+  /**
+   * Get a sorted list of flight schedule records by departureAirport._id field
+   * @param {Object} conf
+   * @param {String} conf.deptCode initial departure airport code
+   * @param {Number} conf.size number of flight records to fetch starting with `dept_code`
+   */
+  async function getPage(deptCode, size) {
+    return getRecords({
+      query: { 'departureAirport._id': { $gt: deptCode } },
+      count: size,
+    });
+  }
 
 })()
