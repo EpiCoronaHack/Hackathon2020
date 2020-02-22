@@ -139,4 +139,5 @@
     pageSize: 200,
     storageConnection: socket,
   });
+  socket.close();
 })();
