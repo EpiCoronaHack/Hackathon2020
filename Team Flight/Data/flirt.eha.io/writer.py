@@ -40,6 +40,7 @@ async def handler(websocket, path):
             filename = f'{first_id}-{last_id}-{size}.json'
 
             write(schedules, filename)
+            print(f'New page written in: {filename}')
         except websockets.ConnectionClosed:
             print(f"Connection Terminated")
             break
