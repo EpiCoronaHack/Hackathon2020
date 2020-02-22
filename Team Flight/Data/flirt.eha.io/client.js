@@ -1,15 +1,16 @@
-(() => {
+/* eslint no-constant-condition: ["error", { "checkLoops": false }] */
 
-/*******************************************************************************
- * Fetches paginated flight records from flirt.eha.io backend and streams them
- * to python server for permanent storage.
+(async () => {
+  /** *****************************************************************************
+   * Fetches paginated flight records from flirt.eha.io backend and streams them
+   * to python server for permanent storage.
+   *
  * 
- * --------------------
- * Author: Lavneet Puri
- *******************************************************************************
- */
-
-socket = new WebSocket('ws://127.0.0.1:3000');
+   *
+   * --------------------
+   * Author: Lavneet Puri
+   *******************************************************************************
+   */
 
   /**
    * Query backend for flight schedule
@@ -17,7 +18,7 @@ socket = new WebSocket('ws://127.0.0.1:3000');
    * @param {Object} conf.query refer to README to construct this mongo query
    * @param {Number} [conf.count=0] limit number of records;
    * fetch all if left empty
-   * @return {Array} list of requested flight schedule records
+   * @return {Array} promise to a list of requested flight schedule records
    */
   function getRecords({ query, count }) {
     return new Promise((resolve, reject) => {
