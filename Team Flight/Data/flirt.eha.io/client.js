@@ -43,4 +43,17 @@ socket = new WebSocket('ws://127.0.0.1:3000');
       count: size,
     });
   }
+
+  /**
+   * initiate a new websocket connection
+   * @param {Array} host host ip
+   * @param {Number} port port server is listening on
+   * @return promise to a new `WebSocket` reference
+   */
+  function initConnection(host, port) {
+    return new Promise((resolve) => {
+      const socket = new WebSocket(`ws://${host}:${port}`);
+      socket.onopen = () => resolve(socket);
+    });
+  }
 })();
