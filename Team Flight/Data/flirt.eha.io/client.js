@@ -1,11 +1,12 @@
+/* eslint-disable no-console */
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-underscore-dangle */
 /* eslint no-constant-condition: ["error", { "checkLoops": false }] */
 
 (async () => {
   /** *****************************************************************************
    * Fetches paginated flight records from flirt.eha.io backend and streams them
    * to python server for permanent storage.
-   *
- * 
    *
    * --------------------
    * Author: Lavneet Puri
