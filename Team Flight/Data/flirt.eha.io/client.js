@@ -97,6 +97,7 @@
       if (!page.length) break;
 
       socket.send(JSON.stringify(page));
+      console.log(`Page with initial ID ${currId} and size ${pageSize} sent`);
 
       // update to last know maximum ID
       currId = page[page.length - 1]._id._str;
