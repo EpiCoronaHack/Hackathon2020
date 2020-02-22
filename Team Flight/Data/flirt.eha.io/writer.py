@@ -3,13 +3,14 @@
 ################################################################################
 # Server socket handler listening for paginated flight records from client
 #
-#---------------------
+# ---------------------
 # Author: Lavneet Puri
 ################################################################################
 
 import asyncio
 import websockets
 import json
+
 
 async def handler(websocket, path):
     print(f"New Connection!")
