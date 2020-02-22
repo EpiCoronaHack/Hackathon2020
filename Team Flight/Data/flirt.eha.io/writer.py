@@ -31,7 +31,8 @@ async def handler(websocket, path):
 HOST = '0.0.0.0'
 PORT = 3000
 start_server = websockets.serve(handler, HOST, PORT)
+asyncio.get_event_loop().run_until_complete(start_server)
+
 print(f'Listening on ws://{HOST}:{PORT}')
 
-asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()
