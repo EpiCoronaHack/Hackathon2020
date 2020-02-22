@@ -85,18 +85,19 @@
     let page;
     let currId = initialId;
     do {
+      // because reference to page is needed to confirm next iteration run
+      // eslint-disable-next-line no-await-in-loop
+      page = await getNextPage(currId, pageSize);
+      if (!page.length) break;
+
+      // make sure socket is still open
       if (ws.readyState !== 1) {
         console.error('STOPPING',
           'Connection to storage server not open. Is the local server running?');
         console.log(`Use '${currId}' as initialId for next run`);
         return;
       }
-
-      // because reference to page is needed to confirm next iteration run
-      // eslint-disable-next-line no-await-in-loop
-      page = await getNextPage(currId, pageSize);
-      if (!page.length) break;
-
+      // TODO: what if storage server disconnects here? Current page will never be sent.
       socket.send(JSON.stringify(page));
       console.log(`Page with initial ID ${currId} and size ${pageSize} sent`);
 
