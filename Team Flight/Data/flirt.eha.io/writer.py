@@ -27,20 +27,24 @@ def write(schedules, path):
 
 
 async def handler(websocket, path):
-    print(f"New Connection!")
+    print('New Connection')
     # keep connection alive
     while True:
         try:
             page = await websocket.recv()
+            schedules = json.loads(page)
 
-            print(json.loads(page))
+            size = len(schedules)
+            first_id = schedules[0]['_id']['_str']
+            last_id = schedules[size - 1]['_id']['_str']
+            filename = f'{first_id}-{last_id}-{size}.json'
+
+            write(schedules, filename)
         except websockets.ConnectionClosed:
             print(f"Connection Terminated")
             break
         except Exception as e:
             print(e)
-            # TODO: Only for debugging on client
-            pass
 
 HOST = '0.0.0.0'
 PORT = 3000
