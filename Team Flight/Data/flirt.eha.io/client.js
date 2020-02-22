@@ -58,14 +58,14 @@
   }
   /** get first _id in database */
   async function getFirstID() {
-    const seed = '5d2d9ad10c8ec0b8bdc160bb';
+    const seed = '5d2cb2e50c8ec0b8bd995018';
     let prevPage;
     let currId = seed;
     let i = 0;
     do {
-      console.log(`Iteration ${i}`, `Least known ID ${currId}`)
+      console.log(`Iteration ${i}`, `Least known ID ${currId}`);
       prevPage = await getRecords({
-        query: { '_id': { $lt: new Mongo.ObjectID(currId) } },
+        query: { _id: { $lt: new Mongo.ObjectID(currId) } },
         count: 200,
       });
       if (!prevPage.length) break;
@@ -73,7 +73,7 @@
       // update to smallest id in the previous page
       currId = prevPage[0]._id._str;
       i++;
-    } while(true)
-    console.log('First ID is currId')
+    } while (true);
+    console.log('First ID is currId');
   }
 })();
