@@ -56,6 +56,56 @@
       socket.onopen = () => resolve(socket);
     });
   }
+
+  /**
+   * incrementally download paginated flight schedule records
+   * and send them to server for permanent storage
+   * @param {String} initialId _id first known document in database (use `getFirstID`)
+   * @param {Number} pageSize Number of records to fetch in single page
+   * @param {WebSocket} storageConnection socket connection handler to server
+   */
+
+  async function beginFetching({ initialId, pageSize, storageConnection }) {
+    const ws = storageConnection;
+    if (ws.readyState !== 1) {
+      console.error('STOPPING',
+        'Connection to storage server not open. Is the local server running?');
+      console.log(`Use '${initialId}' as initialId for next run`);
+      return;
+    }
+    // Send the initialId record for storage
+    const res = await getRecords({
+      query: { _id: new Mongo.ObjectID(initialId) },
+      count: 1,
+    });
+    if (res) socket.send(JSON.stringify(res));
+
+    // Send follow up pages for storage
+    let page;
+    let currId = initialId;
+    do {
+      if (ws.readyState !== 1) {
+        console.error('STOPPING',
+          'Connection to storage server not open. Is the local server running?');
+        console.log(`Use '${currId}' as initialId for next run`);
+        return;
+      }
+
+      // because reference to page is needed to confirm next iteration run
+      // eslint-disable-next-line no-await-in-loop
+      page = await getNextPage(currId, pageSize);
+      if (!page.length) break;
+
+      socket.send(JSON.stringify(page));
+
+      // update to last know maximum ID
+      currId = page[page.length - 1]._id._str;
+    } while (true);
+
+    console.log('STOPPING', 'No more records left to fetch');
+    console.log(`Last page sent: _id ${currId}, size ${pageSize}`);
+  }
+
   /** get first _id in database */
   async function getFirstID() {
     const seed = '5d2cb2e50c8ec0b8bd995018';
