@@ -3,6 +3,9 @@
 ################################################################################
 # Server socket handler listening for paginated flight records from client
 #
+# Usage:
+# python writer.py data_volume_path
+#
 # ---------------------
 # Author: Lavneet Puri
 ################################################################################
@@ -11,6 +14,14 @@ import asyncio
 import websockets
 import json
 import os
+import sys
+
+if len(sys.argv) < 2:
+    print('Please specify data volume path as first argument to script')
+    sys.exit(0)
+
+data_volume = sys.argv[1]
+print(f'Configured {data_volume} as data storage directory')
 
 
 def write(schedules, path):
@@ -39,7 +50,7 @@ async def handler(websocket, path):
             last_id = schedules[size - 1]['_id']['_str']
             filename = f'{first_id}-{last_id}-{size}.json'
 
-            write(schedules, filename)
+            write(schedules, os.path.join(data_volume, filename))
             print(f'New page written in: {filename}')
         except websockets.ConnectionClosed:
             print(f"Connection Terminated")
