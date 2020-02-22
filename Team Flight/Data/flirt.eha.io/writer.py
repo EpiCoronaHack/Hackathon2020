@@ -10,6 +10,20 @@
 import asyncio
 import websockets
 import json
+import os
+
+
+def write(schedules, path):
+    """Write list of schedules to file.
+       Append the json records if file already exists.
+
+    Arguments:
+        schedules {list} -- list of flight schedule records
+        path {string} -- full path to file
+    """
+    with open(path, 'a') as file:
+        for schedule in schedules:
+            file.write(f'{json.dumps(schedule)}\n')
 
 
 async def handler(websocket, path):
