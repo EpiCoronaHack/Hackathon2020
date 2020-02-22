@@ -31,15 +31,27 @@ socket = new WebSocket('ws://127.0.0.1:3000');
   }
 
   /**
-   * Get a sorted list of flight schedule records by departureAirport._id field
+   * Get a list of follow up flight schedule records from id
    * @param {Object} conf
-   * @param {String} conf.deptCode initial departure airport code
-   * @param {Number} conf.size number of flight records to fetch
-   * starting with `dept_code`
+   * @param {String} conf.id hex _id from some valid mongo document
+   * @param {Number} conf.size number of flight records to fetch starting with `id`
    */
-  async function getPage(deptCode, size) {
+  async function getNextPage(id, size) {
     return getRecords({
-      query: { 'departureAirport._id': { $gt: deptCode } },
+      query: { _id: { $gte: new Mongo.ObjectID(id) } },
+      count: size,
+    });
+  }
+
+  /**
+   * Get a list of previous flight schedule records from id
+   * @param {Object} conf
+   * @param {String} conf.id hex _id from some valid mongo document
+   * @param {Number} conf.size number of flight records to fetch ending with `id`
+   */
+  async function getPrevPage(id, size) {
+    return getRecords({
+      query: { '_id': { $lte: new Mongo.ObjectID(id) } },
       count: size,
     });
   }
