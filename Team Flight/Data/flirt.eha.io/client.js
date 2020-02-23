@@ -70,6 +70,22 @@
   }
 
   /**
+   * send given page to server for permanent storage
+   * @param {Array} page list of flight schedule records
+   * @param {String} code iata code of airport corresponding to the page
+   * @param {WebSocket} socket reference to storage server socket connection
+   */
+  function sendPage(page, code, socket) {
+    if (socket.readyState !== 1) {
+      throw new Error(
+        'STOPPING Connection to storage server not open. Is the local server running?'
+        + `Use ${code} as fromDeptCode arg to beginFetching in the next run`,
+      );
+    }
+    socket.send(JSON.stringify({ code: code || 'UNKNOWN', page }));
+  }
+
+  /**
    * incrementally download flight schedule records for each departure airport
    * and send them to server for permanent storage
    * @param {String} fromDeptCode start from this airport iata code
