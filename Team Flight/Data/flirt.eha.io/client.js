@@ -100,6 +100,14 @@
       console.log(`Page for departure airport ${code} with size ${page.length} sent`);
     }
 
+    // send records with unknown departureAirport
+    code = null;
+    page = await getPage(code);
+    if (page.length) {
+      sendPage(page, code, storageConnection);
+      console.log(`Page for UNKNOWN departure airports with size ${page.length} sent`);
+    }
+
     console.log('STOPPING', 'No more records left to fetch');
   }
 
