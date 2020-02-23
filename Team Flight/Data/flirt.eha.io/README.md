@@ -35,7 +35,12 @@ By default the client script will begin downloading _all_ the flight schedule re
 ### Boot the application
 
 **Server startup**  
-`python writer.py <data_output_volume>`
+
+```console
+cd Team Flight/Data/flirt.eha.io
+pip install -r requirements.txt
+python writer.py <data_output_volume>
+```
 
 **Client startup**  
 Following instructions have been tested on chrome.
