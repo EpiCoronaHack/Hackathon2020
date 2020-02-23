@@ -32,7 +32,7 @@ def write(schedules, path):
         schedules {list} -- list of flight schedule records
         path {string} -- full path to file
     """
-    with open(path, 'a') as file:
+    with open(path, 'w') as file:
         for schedule in schedules:
             file.write(f'{json.dumps(schedule)}\n')
 
@@ -42,15 +42,16 @@ async def handler(websocket, path):
     # keep connection alive
     while True:
         try:
-            page = await websocket.recv()
-            schedules = json.loads(page)
+            data = await websocket.recv()
+            data = json.loads(data)
 
+            code = data['code']
+            schedules = data['page']
             size = len(schedules)
-            first_id = schedules[0]['_id']['_str']
-            last_id = schedules[size - 1]['_id']['_str']
-            filename = f'{first_id}-{last_id}-{size}.json'
+            filename = f'{code}-{size}.json'
 
             write(schedules, os.path.join(data_volume, filename))
+
             print(f'New page written in: {filename}')
         except websockets.ConnectionClosed:
             print(f"Connection Terminated")
