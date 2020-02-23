@@ -60,11 +60,29 @@
   }
 
   /**
+   * increment char in asscii
+   * @param {String} char single letter string
+   */
+  function incChar(char) {
+    return String.fromCharCode(char.charCodeAt(0) + 1);
+  }
+
+  /**
    * increments the given iata code, say from AAA to AAB
    * @param {String} code three letter IATA code
    */
+  // TODO: AAZ increment to AB0 instead of ABA
   function incIATACode(code) {
-    // convert code to base36 (0-z) for easy arithmetic
+    if (code[2] === 'Z') {
+      if (code[1] === 'Z') {
+        // form [A-Z]ZZ
+        return `${incChar(code[0])}AA`;
+      }
+      // form [A-Z][A-Y]Z
+      return `${code[0]}${incChar(code[1])}A`;
+    }
+
+    // otherwise convert code to base36 (0-z) for easy arithmetic
     const n = parseInt(code, 36);
     return (n + 1).toString(36).toUpperCase();
   }
