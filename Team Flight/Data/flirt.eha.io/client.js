@@ -1,3 +1,4 @@
+/* eslint-disable no-continue */
 /* eslint-disable no-console */
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-underscore-dangle */
@@ -68,74 +69,40 @@
     return (n + 1).toString(36).toUpperCase();
   }
 
+  /**
+   * incrementally download flight schedule records for each departure airport
    * and send them to server for permanent storage
-   * @param {String} initialId _id first known document in database (use `getFirstID`)
-   * @param {Number} pageSize Number of records to fetch in single page
+   * @param {String} fromDeptCode start from this airport iata code
    * @param {WebSocket} storageConnection socket connection handler to server
    */
-
-  async function beginFetching({ initialId, pageSize, storageConnection }) {
+  async function beginFetching({ fromDeptCode, storageConnection }) {
     const ws = storageConnection;
-    if (ws.readyState !== 1) {
-      console.error('STOPPING',
-        'Connection to storage server not open. Is the local server running?');
-      console.log(`Use '${initialId}' as initialId for next run`);
-      return;
-    }
-    // Send the initialId record for storage
-    const res = await getRecords({
-      query: { _id: new Mongo.ObjectID(initialId) },
-      count: 1,
-    });
-    if (res) ws.send(JSON.stringify(res));
-
-    // Send follow up pages for storage
     let page;
-    let currId = initialId;
-    do {
-      // because reference to page is needed to confirm next iteration run
-      // eslint-disable-next-line no-await-in-loop
-      page = await getNextPage(currId, pageSize);
-      if (!page.length) break;
-
-      // make sure socket is still open
+    for (let code = fromDeptCode; code.length === 3; code = incIATACode(code)) {
+      page = await getPage(code);
+      if (!page.length) continue;
       if (ws.readyState !== 1) {
         console.error('STOPPING',
           'Connection to storage server not open. Is the local server running?');
         console.log(`Use '${currId}' as initialId for next run`);
         return;
       }
+
       // TODO: what if storage server disconnects here? Current page will never be sent.
       ws.send(JSON.stringify(page));
-      const firstId = page[0]._id._str;
-      const lastId = page[page.length - 1]._id._str;
-      console.log(`Page ${firstId}-${lastId} of size ${pageSize} sent`);
-
-      // update to last know maximum ID
-      currId = page[page.length - 1]._id._str;
-    } while (true);
+      console.log(`Page for departure airport ${code} with size ${page.length} sent`);
+    }
 
     console.log('STOPPING', 'No more records left to fetch');
-    console.log(`Last page sent: _id ${currId}, size ${pageSize}`);
-  }
-
-  /**
-   * increments the given iata code, say from AAA to AAB
-   * @param {String} code three letter IATA code
-   */
-  function incIATACode(code) {
-    // convert code to base36 (0-z) for easy arithmetic
-    const n = parseInt(code, 36);
-    return (n + 1).toString(36).toUpperCase();
   }
 
   const HOST = '127.0.0.1';
   const PORT = 4000;
 
   const socket = await initConnection(HOST, PORT);
-  beginFetching({
-    initialId: '5d2cb2e50c8ec0b8bd995018',
-    pageSize: 200,
+  console.log('Socket connection established!');
+  await beginFetching({
+    fromDeptCode: 'AAA',
     storageConnection: socket,
   });
   socket.close();
