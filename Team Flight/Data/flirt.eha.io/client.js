@@ -92,20 +92,11 @@
    * @param {WebSocket} storageConnection socket connection handler to server
    */
   async function beginFetching({ fromDeptCode, storageConnection }) {
-    const ws = storageConnection;
     let page;
     for (let code = fromDeptCode; code.length === 3; code = incIATACode(code)) {
       page = await getPage(code);
       if (!page.length) continue;
-      if (ws.readyState !== 1) {
-        console.error('STOPPING',
-          'Connection to storage server not open. Is the local server running?');
-        console.log(`Use '${currId}' as initialId for next run`);
-        return;
-      }
-
-      // TODO: what if storage server disconnects here? Current page will never be sent.
-      ws.send(JSON.stringify(page));
+      sendPage(page, code, storageConnection);
       console.log(`Page for departure airport ${code} with size ${page.length} sent`);
     }
 
