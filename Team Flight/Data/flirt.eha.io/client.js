@@ -21,7 +21,7 @@
    * fetch all if left empty
    * @return {Array} promise to a list of requested flight schedule records
    */
-  function getRecords({ query, count }) {
+  async function getRecords({ query, count }) {
     return new Promise((resolve, reject) => {
       // Setting count to 0 fetched all records from the server.
       const limit = count || 0;
