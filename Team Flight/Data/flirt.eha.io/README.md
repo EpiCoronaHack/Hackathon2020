@@ -1,6 +1,6 @@
 ## Description
 
-JS scripts used for fetching flight data from [flirt.eha.io](https://flirt.eha.io/). The app uses [Meteor](https://www.meteor.com/) for its data-layer. We can exploit its remote procedure calls ([Meteor Methods](https://guide.meteor.com/methods.html)) and request the backend for flights schedules matching a specific mongo query.
+JS and Python scripts used for fetching and storing flight data from [flirt.eha.io](https://flirt.eha.io/). The app uses [Meteor](https://www.meteor.com/) for its data-layer. We can exploit its remote procedure calls ([Meteor Methods](https://guide.meteor.com/methods.html)) and request the backend for flights schedules matching a specific mongo query.
 
 ### Data Statistics
 
