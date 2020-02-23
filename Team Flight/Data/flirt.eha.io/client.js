@@ -111,27 +111,15 @@
     console.log(`Last page sent: _id ${currId}, size ${pageSize}`);
   }
 
-  /** get first _id in database */
-  async function getFirstID() {
-    const seed = '5d2cb2e50c8ec0b8bd995018';
-    let prevPage;
-    let currId = seed;
-    let i = 0;
-    do {
-      console.log(`Iteration ${i}`, `Least known ID ${currId}`);
-      prevPage = await getRecords({
-        query: { _id: { $lt: new Mongo.ObjectID(currId) } },
-        count: 200,
-      });
-      if (!prevPage.length) break;
-
-      // update to smallest id in the previous page
-      currId = prevPage[0]._id._str;
-      i++;
-    } while (true);
-    console.log('First ID is currId');
+  /**
+   * increments the given iata code, say from AAA to AAB
+   * @param {String} code three letter IATA code
+   */
+  function incIATACode(code) {
+    // convert code to base36 (0-z) for easy arithmetic
+    const n = parseInt(code, 36);
+    return (n + 1).toString(36).toUpperCase();
   }
-
 
   const HOST = '127.0.0.1';
   const PORT = 4000;
