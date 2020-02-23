@@ -1,0 +1,3 @@
+[submodule "FlightsTeam/SimultaneusTransportationSIRModel/csv-parser"]
+	path = FlightsTeam/SimultaneusTransportationSIRModel/csv-parser
+	url = https://github.com/AriaFallah/csv-parser.git
