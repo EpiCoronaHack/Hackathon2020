@@ -59,7 +59,15 @@
   }
 
   /**
-   * incrementally download paginated flight schedule records
+   * increments the given iata code, say from AAA to AAB
+   * @param {String} code three letter IATA code
+   */
+  function incIATACode(code) {
+    // convert code to base36 (0-z) for easy arithmetic
+    const n = parseInt(code, 36);
+    return (n + 1).toString(36).toUpperCase();
+  }
+
    * and send them to server for permanent storage
    * @param {String} initialId _id first known document in database (use `getFirstID`)
    * @param {Number} pageSize Number of records to fetch in single page
