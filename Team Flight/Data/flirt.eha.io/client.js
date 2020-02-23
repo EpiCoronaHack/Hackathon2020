@@ -95,7 +95,12 @@
     let page;
     for (let code = fromDeptCode; code.length === 3; code = incIATACode(code)) {
       page = await getPage(code);
-      if (!page.length) continue;
+
+      if (!page.length) {
+        console.log(`No records for departure airport ${code}. Continuing...`);
+        continue;
+      }
+
       sendPage(page, code, storageConnection);
       console.log(`Page for departure airport ${code} with size ${page.length} sent`);
     }
