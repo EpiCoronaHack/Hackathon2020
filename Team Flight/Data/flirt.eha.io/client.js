@@ -71,7 +71,6 @@
    * increments the given iata code, say from AAA to AAB
    * @param {String} code three letter IATA code
    */
-  // TODO: AAZ increment to AB0 instead of ABA
   function incIATACode(code) {
     if (code[2] === 'Z') {
       if (code[1] === 'Z') {
@@ -140,7 +139,7 @@
   const socket = await initConnection(HOST, PORT);
   console.log('Socket connection established!');
   await beginFetching({
-    fromDeptCode: 'AAA',
+    fromDeptCode: 'BZW',
     storageConnection: socket,
   });
   socket.close();
