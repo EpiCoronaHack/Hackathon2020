@@ -33,15 +33,15 @@
   }
 
   /**
-   * Get a list of follow up flight schedule records sorted by mongo _id
-   * @param {Object} conf
-   * @param {String} conf.id hex _id from some valid mongo document
-   * @param {Number} conf.size number of flight records to fetch starting with `id`
+   * Get a list of flight schedule records for a given departure airport
+   * @param {String} code iata code for departure airport
    */
-  async function getNextPage(id, size) {
+  async function getPage(code) {
+    // some number bigger than total records to fetch all
+    const upperBound = 250000;
     return getRecords({
-      query: { _id: { $gt: new Mongo.ObjectID(id) } },
-      count: size,
+      query: { 'departureAirport._id': code },
+      count: upperBound,
     });
   }
 
