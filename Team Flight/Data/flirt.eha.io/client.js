@@ -79,7 +79,7 @@
       query: { _id: new Mongo.ObjectID(initialId) },
       count: 1,
     });
-    if (res) socket.send(JSON.stringify(res));
+    if (res) ws.send(JSON.stringify(res));
 
     // Send follow up pages for storage
     let page;
@@ -98,8 +98,10 @@
         return;
       }
       // TODO: what if storage server disconnects here? Current page will never be sent.
-      socket.send(JSON.stringify(page));
-      console.log(`Page with initial ID ${currId} and size ${pageSize} sent`);
+      ws.send(JSON.stringify(page));
+      const firstId = page[0]._id._str;
+      const lastId = page[page.length - 1]._id._str;
+      console.log(`Page ${firstId}-${lastId} of size ${pageSize} sent`);
 
       // update to last know maximum ID
       currId = page[page.length - 1]._id._str;
