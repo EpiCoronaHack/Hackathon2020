@@ -140,7 +140,7 @@
   const socket = await initConnection(HOST, PORT);
   console.log('Socket connection established!');
   await beginFetching({
-    fromDeptCode: 'BZW',
+    fromDeptCode: 'AAA',
     storageConnection: socket,
   });
   socket.close();
