@@ -1,6 +1,6 @@
 ## Description
 
-*The code in this folder has been archived. It is only keep in repo for reference to initial analysis conducted for fetching flights data.*
+*The code in this folder has been archived due it's inefficiency when dealing with large number of records. It is only kept in repo for reference to initial analysis conducted for fetching flights data.*
 
 JS scripts used for fetching flight data from <https://flirt.eha.io/>
 flirt.eha.io uses [Meteor](https://www.meteor.com/) for its data-layer. We can exploit its remote procedure calls ([Meteor Methods](https://guide.meteor.com/methods.html)) and query the backend for flights leaving a given region (city, country, airport, etc).
@@ -12,6 +12,9 @@ Following instructions have been tested on chrome.
  3. *optional* Only if you plan on using the transformed data:  
     adjust the dev tools timezone to UTC by [changing geolocation sensor](https://stackoverflow.com/a/60008052/4652082) to London. Otherwise dates in `times` field will be inconsistent with raw data (which is in UTC).
  4. Paste `index.js` script and press enter.
+
+> Note: max records fetched is controlled by `limit` arg to `getSchedules`. You may increase this but values greater than `10000` cause extreme delays and often hang the server. If you need large amount of data, refer to instruction with paginated fetching in the parent directory.
+
  5. If successful, the requested flight schedules information will be logged to console.
  6. Right-click the logged objects and select `Store as global variable`.
  7. Note the variable that object is stored into (usually `temp<N>`).
