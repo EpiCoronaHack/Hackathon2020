@@ -3,11 +3,13 @@
  * @param {StringArray} airport_codes list of iata airport codes
  * @param {Number} limit number of records fetched
  */
-function getSchedules({ airport_codes, start_date, end_date, limit }, callback) {
+function getSchedules({
+  airport_codes, start_date, end_date, limit,
+}, callback) {
   // This query was built by analyzing the network communication with meteor backend
   // Commented fields are likely not indexed in mongo, resulting in huge computation time
   query = {
-    "departureAirport._id": { $in: airport_codes },
+    'departureAirport._id': { $in: airport_codes },
     // discontinuedDate: { $gte: start_date },
     // effectiveDate: { $lte: end_date },
     // arrivalAirport: { $exists: true },
@@ -20,10 +22,11 @@ function getSchedulesCount({ airport_codes, start_date, end_date }, callback) {
   query = {
     discontinuedDate: { $gte: start_date },
     effectiveDate: { $lte: end_date },
-    "departureAirport._id": { $in: airport_codes }
+    'departureAirport._id': { $in: airport_codes },
   };
-  let count = 0;
-  Meteor.call('flightsByQuery', query, count, callback);
+  // Prevent fetching the objects data
+  const limit = 1;
+  Meteor.call('flightsByQuery', query, limit, callback);
 }
 
 /**
@@ -33,11 +36,10 @@ function getSchedulesCount({ airport_codes, start_date, end_date }, callback) {
  * @param {DateArray} [time_range] filter between given time range [start, end]
  */
 function transform(flights, time_range) {
-  schedules = flights.map(fl => {
+  schedules = flights.map((fl) => {
     // TODO: log number of omitted entries
     // omit flight with missing arrival airport info
-    if (!fl.arrivalAirport)
-      return null;
+    if (!fl.arrivalAirport) { return null; }
     time_range = time_range || [fl.effectiveDate, fl.discontinuedDate];
     // get days of week and dates that the flight is scheduled for
     days_scheduled = [];
@@ -46,8 +48,7 @@ function transform(flights, time_range) {
     }
     dates_scheduled = generateDates(time_range, days_scheduled);
     // if flight not running within the specified time_range
-    if (!dates_scheduled.length)
-      return null;
+    if (!dates_scheduled.length) { return null; }
     // concatenate depature time with dates_scheduled to get departure times
     departure_times = [];
     for (i in dates_scheduled) {
@@ -61,8 +62,7 @@ function transform(flights, time_range) {
       // the date, we make an assumption that no direct flight travels longer
       // than 24-hours. Thus, if arrival time is less than departure time, its
       // day will increment by exactly 1.
-      if (fl.arrivalTimeUTC <= fl.departureTimeUTC)
-        date = new Date(date.setDate(date.getDate() + 1));
+      if (fl.arrivalTimeUTC <= fl.departureTimeUTC) { date = new Date(date.setDate(date.getDate() + 1)); }
       arrival_times.push(new Date(date.setHours(...fl.arrivalTimeUTC.split(':'))));
     }
     // create schedule object
@@ -91,7 +91,7 @@ function transform(flights, time_range) {
     };
     return schedule;
   });
-  return schedules.filter(schedule => schedule != null);
+  return schedules.filter((schedule) => schedule != null);
 }
 
 /**
@@ -105,14 +105,13 @@ function generateDates(range, weekdays_to_keep) {
   // keep all weekdays by default
   weekdays_to_keep = weekdays_to_keep || Array(8).fill().map(() => true);
   // Truncate day time from range
-  range = range.map(date => new Date(date.toDateString()));
+  range = range.map((date) => new Date(date.toDateString()));
   dates = [];
   let date = new Date(range[0]);
   let day = date.getDay();
   // iterate through all days in given range and keep only specified weekdays
   while (date <= range[1]) {
-    if (weekdays_to_keep[day])
-      dates.push(new Date(date));
+    if (weekdays_to_keep[day]) { dates.push(new Date(date)); }
     // increment to next day
     date = new Date(date.setDate(date.getDate() + 1));
     day = date.getDay();

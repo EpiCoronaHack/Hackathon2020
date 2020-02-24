@@ -1,61 +1,65 @@
 ## Description
 
-JS scripts used for fetching flight data from <https://flirt.eha.io/>
+JS and Python scripts used for fetching and storing flight data from [flirt.eha.io](https://flirt.eha.io/). The app uses [Meteor](https://www.meteor.com/) for its data-layer. We can exploit its remote procedure calls ([Meteor Methods](https://guide.meteor.com/methods.html)) and request the backend for flights schedules matching a specific mongo query.
 
-flirt.eha.io uses [Meteor](https://www.meteor.com/) for its data-layer. We can exploit its remote procedure calls ([Meteor Methods](https://guide.meteor.com/methods.html)) and query the backend for flights leaving a given region (city, country, airport, etc).
+### Data Statistics
 
-## Usage
-Following instructions have been tested on chrome.
- 1. Go to <https://flirt.eha.io/>
- 2. Open browser console (ctrl-shift-j in chrome)
- 3. Paste `index.js` script and press enter.
- 4. If successful, the requested flight schedules information will be logged to console.
- 5. Right-click the logged objects and select `Store as global variable`.
- 6. Note the variable that object is stored into (usually `temp<N>`).
- 7. Run `copy(temp<N>)` to copy the object to clipboard and paste it in a local file.
-
- > **Note:** For possible list of airport codes, analyze websockets connection while searching for flights through UI by country or city. Look for call to `flightsByQuery` method. You may also manually find the airport codes from other resources on the internet.
-
-## Data Transformation
-
-You're welcome to use only the raw data returned from the server. But if you choose to export the transformed schedules data, keep the following in mind:
-
-> 1. The raw data contains departure and arrival time **without** the date for every flight schedule. To obtain the departure and arrival times with date, we make an assumption that none of the flights have travel duration longer than a day (24 hrs).
-
-> 2. The schedules with missing arrival airport information are omitted.
-
-#### Transformed Data Schema
+These stats are true as of the day of this commit. To obtain an updated report, run the following in the browser dev tools after loading the [app](https://flirt.eha.io/):
 
 ```console
-{
-  flight_id,
-  total_seats,
-  effective_date,     flight authorized to run on specified schedule
-  discontinued_date,  flight discontinued to run on specified schedule
-  days_scheduled      [list] boolean array corresponding to whether a flight
-                             is scheduled on a given weekday or not
-  departure: {
-    airport_code,
-    city,
-    country,
-    global_region,
-    times,            [list] in UTC; every index corresponds with arrival.times
-    loc: {
-      type,
-      coordinates,    [list] in form [longitude, latitude]
-    },
+// Print total number of records matching the specified query.
+Meteor.call('flightsByQuery', query, 1, (err, res) => {
+  if (err) console.log(err);
+  console.log(res.totalRecords);
+});
+```
 
-  }
-  arrival: {
-    airport,
-    city,
-    country,
-    global_region,
-    times,            [list] in UTC; every index corresponds with departure.times
-    loc: {
-      type,
-      coordinates,
-    },
-  }
-}
+- The database contains a total of `224933` flight schedule records.  
+  `query = {_id: {$exists: true}}`
+
+- `17` of these schedules correspond to flights arriving in *Vancouver* from *China*.  
+  `query = {"departureAirport.countryName": "China", "arrivalAirport._id": "YVR"}`
+- `61` of these schedules correspond to flights arriving in *Canada* from *China*.  
+  `query = {"departureAirport.countryName": "China", "arrivalAirport.countryName": "Canada"}`
+
+### Flight Schedule Schema
+
+```console
+TODO
+```
+
+## Usage
+
+By default the client script will begin downloading _all_ the flight schedule records beginning from departure airport code `AAA`. If you wish to start downloading from a higher code value, update `fromDeptCode` arg to `beginFetching` function call in `client.js`.
+
+### Boot the application
+
+**Storage Server Startup**  
+
+```console
+cd Team Flight/Data/flirt.eha.io
+pip install -r requirements.txt
+python writer.py <data_output_volume>
+```
+
+**Client Startup**  
+Following instructions have been tested on chrome.
+
+1. Go to <https://flirt.eha.io/> and wait for site to finish loading.
+2. Open browser console (`ctrl-shift-j`)
+3. Paste `client.js` script and press enter.
+
+The browser should begin downloading pages for each departure airport and sending them to the server for permanent storage.
+
+### Accidental termination
+
+In case, the server or the client is terminated or stops responding mid-way, take note of the name for last page file written in server logs. The page file name follows the convention: `<departure-airport-code>-<page-size>.json`. Use the `<departure-airport-code>` as `fromDeptCode` for `beginFetching` call in `client.js`.
+
+## Development
+
+If you wish to run a file watcher to automatically restart storage server on file save event:
+
+```console
+pip install watchdog
+watchmedo auto-restart --directory=<flirt.eha.io> -p="*.py" -- python writer.py <data_output_volume>
 ```
