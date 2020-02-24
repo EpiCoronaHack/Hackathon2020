@@ -71,6 +71,7 @@
    * increments the given iata code, say from AAA to AAB
    * @param {String} code three letter IATA code
    */
+  // TODO: throw error on invalid `code` format
   function incIATACode(code) {
     if (code[2] === 'Z') {
       if (code[1] === 'Z') {
