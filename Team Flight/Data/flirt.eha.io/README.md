@@ -4,23 +4,23 @@ JS and Python scripts used for fetching and storing flight data from [flirt.eha.
 
 ### Data Statistics
 
-As of the day of this commit, the database contains a total of `224927` flight schedule records. To obtain an updated report, run the following in the browser dev tools after loading the [app](https://flirt.eha.io/):
+These stats are true as of the day of this commit. To obtain an updated report, run the following in the browser dev tools after loading the [app](https://flirt.eha.io/):
 
 ```console
-// Records with valid departure airports
-Meteor.call('flightsByQuery', { 'departureAirport._id': { $gt: 'AAA' } }, 1, (err, res) => {
-  if (err) console.log(err);
-  console.log(res.totalRecords);
-});
-
-// Records with missing departure airports
-Meteor.call('flightsByQuery', { 'departureAirport._id': null }, 1, (err, res) => {
+// Print total number of records matching the specified query.
+Meteor.call('flightsByQuery', query, 1, (err, res) => {
   if (err) console.log(err);
   console.log(res.totalRecords);
 });
 ```
 
-Total both outputted values.
+- The database contains a total of `224933` flight schedule records.  
+  `query = {_id: {$exists: true}}`
+
+- `17` of these schedules correspond to flights arriving in *Vancouver* from *China*.  
+  `query = {"departureAirport.countryName": "China", "arrivalAirport._id": "YVR"}`
+- `61` of these schedules correspond to flights arriving in *Canada* from *China*.  
+  `query = {"departureAirport.countryName": "China", "arrivalAirport.countryName": "Canada"}`
 
 ### Flight Schedule Schema
 
@@ -34,7 +34,7 @@ By default the client script will begin downloading _all_ the flight schedule re
 
 ### Boot the application
 
-**Server startup**  
+**Storage Server Startup**  
 
 ```console
 cd Team Flight/Data/flirt.eha.io
@@ -42,7 +42,7 @@ pip install -r requirements.txt
 python writer.py <data_output_volume>
 ```
 
-**Client startup**  
+**Client Startup**  
 Following instructions have been tested on chrome.
 
 1. Go to <https://flirt.eha.io/> and wait for site to finish loading.
