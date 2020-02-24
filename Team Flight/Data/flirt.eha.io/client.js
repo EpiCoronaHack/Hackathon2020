@@ -110,7 +110,7 @@
    */
   async function beginFetching({ fromDeptCode, storageConnection }) {
     let page;
-    for (let code = fromDeptCode; code.length === 3; code = incIATACode(code)) {
+    for (let code = fromDeptCode; code <= 'ZZZ'; code = incIATACode(code)) {
       page = await getPage(code);
 
       if (!page.length) {
