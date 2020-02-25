@@ -29,7 +29,7 @@ The browser should begin downloading pages for each departure airport and sendin
 
 In case, the server or the client is terminated or stops responding mid-way, take note of the name for last page file written in server logs. The page file name follows the convention: `<departure-airport-code>-<page-size>.json`. Use the `<departure-airport-code>` as `fromDeptCode` for `beginFetching` call in `client.js`.
 
-### Quickly Fetching Data Statistics
+## Quickly Fetching Data Statistics
 
 To obtain an updated report on stats without downloading all the data, run the following in the browser console after loading the [app](https://flirt.eha.io/):
 
@@ -93,6 +93,19 @@ Meteor.call('flightsByQuery', query, 1, (err, res) => {
   seatsOverInterval:   [number] *unknown; all records have value 0
 }
 ```
+
+## Data Transformation
+
+Best way is to simply import all json file into mongoDB to perform local queries:  
+`for file in <raw_data_dir>/*.json; do mongoimport -h localhost:27017 --db corona --collection schedules --type json --file $file; done`
+
+### Extracted Datasets
+
+> Refer to `Data Transformation` directory for transformation scripts.
+
+- [Schedules](https://drive.google.com/open?id=1EZJpA_x2zXbgEQ86Y3StAI2pOISjaWmm) from [coronavirus infected areas](https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6) to YVR airport. TODO increase the scope to Vancouver instead of YVR.
+- [Schedules](https://drive.google.com/open?id=1EZJpA_x2zXbgEQ86Y3StAI2pOISjaWmm) from [coronavirus infected areas](https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6) to cities with `high outbound traffic` to Vancouver  
+  Can be used as an intermediary layer between affected areas and Vancouver.
 
 ## Development
 
