@@ -4,7 +4,7 @@ JS and Python scripts used for fetching and storing flight data from [flirt.eha.
 
 ## Usage
 
-By default the client script will begin downloading _all_ the flight schedule records beginning from departure airport code `AAA`. If you wish to start downloading from a higher code value, update `fromDeptCode` arg to `beginFetching` function call in `client.js`.
+By default the client script will begin downloading _all_ the flight schedule records beginning from departure airport code `AAA`. If you wish to start downloading from a higher code value, update `fromDeptCode` arg for `beginFetching` function call in `client.js`
 
 ### Boot the application
 
@@ -25,9 +25,9 @@ Following instructions have been tested on chrome.
 
 The browser should begin downloading pages for each departure airport and sending them to the server for permanent storage.
 
-### Accidental termination
+### Accidental Termination
 
-In case, the server or the client is terminated or stops responding mid-way, take note of the name for last page file written in server logs. The page file name follows the convention: `<departure-airport-code>-<page-size>.json`. Use the `<departure-airport-code>` as `fromDeptCode` for `beginFetching` call in `client.js`.
+In case, the server or the client is terminated or stops responding mid-way, take note of the name for last page file written in server logs. The page file name follows the convention: `<departure-airport-code>-<page-size>.json`. When restarting the procedure, use the `<departure-airport-code>` as `fromDeptCode` for `beginFetching` call in `client.js`.
 
 ## Quickly Fetching Data Statistics
 
