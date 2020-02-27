@@ -99,14 +99,16 @@ Meteor.call('flightsByQuery', query, 1, (err, res) => {
 
 ## Data Transformation
 
-Best way is to simply import all json file into mongoDB to perform local queries:  
+Best way is to simply import all json files into mongoDB to perform local queries:  
 `for file in <raw_data_dir>/*.json; do mongoimport -h localhost:27017 --db corona --collection schedules --type json --file $file; done`
+
+> Refer to `transformation` directory for mongoDB transformation scripts.  
+> Configure any necessary collection indexes to speed up computation.
 
 ### Extracted Datasets
 
-> Refer to `Data Transformation` directory for transformation scripts.
-
-- [Schedules](https://drive.google.com/open?id=1EZJpA_x2zXbgEQ86Y3StAI2pOISjaWmm) from [coronavirus infected areas](https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6) to YVR airport. TODO increase the scope to Vancouver instead of YVR.
+- [Schedules](https://drive.google.com/open?id=1EZJpA_x2zXbgEQ86Y3StAI2pOISjaWmm) from [coronavirus infected areas](https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6) to YVR airport.  
+  TODO increase the scope from YVR to Vancouver.
 - [Schedules](https://drive.google.com/open?id=1EZJpA_x2zXbgEQ86Y3StAI2pOISjaWmm) from [coronavirus infected areas](https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6) to cities with `high outbound traffic` to Vancouver  
   Can be used as an intermediary layer between affected areas and Vancouver.
 
@@ -116,5 +118,5 @@ If you wish to run a file watcher to automatically restart storage server on fil
 
 ```console
 pip install watchdog
-watchmedo auto-restart --directory=<flirt.eha.io> -p="*.py" -- python writer.py <data_output_volume>
+watchmedo auto-restart --directory=<this-dir> -p="*.py" -- python writer.py <data_output_volume>
 ```
