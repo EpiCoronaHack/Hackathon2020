@@ -67,7 +67,7 @@ const highOutboundTrafficToVanCities = db.schedules.aggregate([
 // map objects to city names
   .map((el) => el._id);
 
-console.log(highOutboundTrafficToVanCities);
+// console.log(highOutboundTrafficToVanCities);
 
 // filter records based on this query
 const filter = {
