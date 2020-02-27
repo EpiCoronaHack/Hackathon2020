@@ -55,19 +55,19 @@ Meteor.call('flightsByQuery', query, 1, (err, res) => {
 
 ### Raw Flight Schedule Schema
 
-```console
+<pre>
 {
-  _id,                 [object] contains mongo document `oid`
-  effectiveDate,       [string] flight authorized to run on this schedule
-  discontinuedDate,    [string] flight discontinued to run on this schedule
-  day1                [boolean] whether flight is scheduled on Monday (UTC)
-  day2                [boolean] whether flight is scheduled on Tuesday (UTC)
+  _id,                 [object]  contains mongo document `oid`
+  effectiveDate,       [string]  flight authorized to run on this schedule
+  discontinuedDate,    [string]  flight discontinued to run on this schedule
+  day1                [boolean]  whether flight is scheduled on Monday (UTC)
+  day2                [boolean]  whether flight is scheduled on Tuesday (UTC)
   ⋮
-  day7                [boolean] whether flight is scheduled on Sunday (UTC)
+  day7                [boolean]  whether flight is scheduled on Sunday (UTC)
 
-  carrier              [string] carrier airline company code
+  carrier              [string]  carrier airline company code
   flightNumber         [number]
-  totalSeats,          [number] total occupancy of flight
+  totalSeats,          [number]  total occupancy of flight
   departureTimeUTC     [string]
   arrivalTimeUTC       [string]
 
@@ -89,10 +89,13 @@ Meteor.call('flightsByQuery', query, 1, (err, res) => {
   }
   arrivalAirport:      [object]  same structure as `departureAirport`
 
-  flightsOverInterval: [number] *unknown; all records have value 0
-  seatsOverInterval:   [number] *unknown; all records have value 0
+  calculatedDates:       [list]  verified schedule dates recorded by server?
+  scheduleFileName:    [string]  *unknown; file name search to some  
+                                 <a href="http://apps.eha.io/flight-data-validation.html">analysis conducted by flirt</a>
+  flightsOverInterval: [number]  *unknown; all records have value 0
+  seatsOverInterval:   [number]  *unknown; all records have value 0
 }
-```
+</pre>
 
 ## Data Transformation
 
