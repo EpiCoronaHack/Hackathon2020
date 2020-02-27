@@ -120,3 +120,9 @@ If you wish to run a file watcher to automatically restart storage server on fil
 pip install watchdog
 watchmedo auto-restart --directory=<this-dir> -p="*.py" -- python writer.py <data_output_volume>
 ```
+
+## Licensing
+Feel free to redistribute or modify these scripts but be mindful of the fact that we **do not** own any rights to the data or the server query methods.
+
+If you choose to integrate these scripts with the application code, please adhere to licensing guidelines for the application found [here](https://github.com/ecohealthalliance/flirt). Contact the application owners to know about data usage limitations.
+
