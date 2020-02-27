@@ -6,6 +6,9 @@
 // countries extracted from https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6
 let affectedAreas = ['Mainland China', 'South Korea', 'Others', 'Italy', 'Japan', 'Singapore', 'Hong Kong', 'Iran', 'US', 'Thailand', 'Taiwan', 'Australia', 'Malaysia', 'Germany', 'Vietnam', 'United Arab Emirates', 'UK', 'France', 'Canada', 'Macau', 'Kuwait', 'Spain', 'Philippines', 'India', 'Bahrain', 'Russia', 'Oman', 'Afghanistan', 'Nepal', 'Cambodia', 'Israel', 'Belgium', 'Lebanon', 'Finland', 'Sweden', 'Iraq', 'Egypt', 'Sri Lanka'];
 
+// 'Others' contryName is not in database
+affectedAreas = affectedAreas.filter((c) => c !== 'Others');
+
 // map contry names to country names in schedules
 const map = {
   'Mainland China': 'China',
@@ -20,7 +23,7 @@ db.schedules.aggregate([
     $match:
         {
           'departureAirport.countryName': { $in: affectedAreas },
-          'arrivalAirport.countryName': 'Vancouver',
+          'arrivalAirport.city': 'Vancouver',
         },
   },
   // extract fields for csv
