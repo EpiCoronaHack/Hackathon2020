@@ -84,7 +84,7 @@ Meteor.call('flightsByQuery', query, 1, (err, res) => {
     globalRegion,      [string]
     loc: {
       type,            [string]
-      coordinates,       [list]  [<longitude>, <latitude>]
+      coordinates,       [list]  [longitude, latitude]
     },
   }
   arrivalAirport:      [object]  same structure as `departureAirport`
