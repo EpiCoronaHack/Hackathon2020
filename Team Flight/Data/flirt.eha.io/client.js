@@ -136,7 +136,7 @@
   }
 
   const HOST = '127.0.0.1';
-  const PORT = 4000;
+  const PORT = 3010;
 
   const socket = await initConnection(HOST, PORT);
   console.log('Socket connection established!');
