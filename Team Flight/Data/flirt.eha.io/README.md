@@ -107,10 +107,10 @@ Best way is to simply import all json files into mongoDB to perform local querie
 
 ### Extracted Datasets
 
-- [Schedules](https://drive.google.com/open?id=1EZJpA_x2zXbgEQ86Y3StAI2pOISjaWmm) from [coronavirus infected areas](https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6) to YVR airport.  
-  TODO increase the scope from YVR to Vancouver.
-- [Schedules](https://drive.google.com/open?id=1EZJpA_x2zXbgEQ86Y3StAI2pOISjaWmm) from [coronavirus infected areas](https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6) to cities with `high outbound traffic` to Vancouver  
-  Can be used as an intermediary layer between affected areas and Vancouver.
+1. [Schedules](https://drive.google.com/open?id=1EZJpA_x2zXbgEQ86Y3StAI2pOISjaWmm) from [coronavirus infected areas](https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6) to YVR airport.
+2. [Schedules](https://drive.google.com/open?id=1EZJpA_x2zXbgEQ86Y3StAI2pOISjaWmm) from [coronavirus infected areas](https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6) to cities with *high outbound traffic* to Vancouver.
+   - Can be used as an intermediary layer between affected areas and Vancouver (Dataset 1).
+   - A city is considered to have high outbound traffic if `total-seats/week` is at least `5000`.
 
 ## Development
 
