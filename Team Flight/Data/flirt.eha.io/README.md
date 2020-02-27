@@ -124,5 +124,5 @@ watchmedo auto-restart --directory=<this-dir> -p="*.py" -- python writer.py <dat
 ## Licensing
 Feel free to redistribute or modify these scripts but be mindful of the fact that we **do not** own any rights to the data or the server query methods.
 
-If you choose to integrate these scripts with the application code, please adhere to licensing guidelines for the application found [here](https://github.com/ecohealthalliance/flirt). Contact the application owners to know about data usage limitations.
+If you choose to integrate these scripts with the flirt application code, please adhere to licensing guidelines for thier application found [here](https://github.com/ecohealthalliance/flirt). Contact the application owners to know about data usage limitations.
 
