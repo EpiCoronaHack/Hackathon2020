@@ -17,7 +17,7 @@ python writer.py <data_output_volume>
 ```
 
 **Client Startup**  
-Following instructions have been tested on chrome.
+> **Note:** Following instructions have only been tested on chrome.
 
 1. Go to <https://flirt.eha.io/> and wait for site to finish loading.
 2. Open browser console (`ctrl-shift-j`)
