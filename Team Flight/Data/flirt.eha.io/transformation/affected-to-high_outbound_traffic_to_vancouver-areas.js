@@ -55,7 +55,7 @@ const highOutboundTrafficToVanCities = db.schedules.aggregate([
   },
   {
     $match: {
-      totalOutBoundTrafficInOneWeek: { $gt: minTrafficThreshhold },
+      totalOutBoundTrafficInOneWeek: { $gte: minTrafficThreshhold },
     },
   },
   {
