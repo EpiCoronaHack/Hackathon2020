@@ -1,5 +1,5 @@
 /**
- * mongo script to extract schedules from corona affected contries to YVR airport
+ * mongo script to extract schedules from corona affected contries to Vancouver
  * Note: This script is to be run inside mongo shell or any mongo GUI client
  */
 
