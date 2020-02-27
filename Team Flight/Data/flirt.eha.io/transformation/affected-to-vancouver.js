@@ -17,14 +17,16 @@ const map = {
 };
 affectedAreas = affectedAreas.map((c) => map[c] || c);
 
-// Export the result from this query to csv with all fields
+// filter records based on this query
+const filter = {
+  'departureAirport.countryName': { $in: affectedAreas },
+  'arrivalAirport.city': 'Vancouver',
+};
+
+// Export the result to csv based on `filter`
 db.schedules.aggregate([
   {
-    $match:
-        {
-          'departureAirport.countryName': { $in: affectedAreas },
-          'arrivalAirport.city': 'Vancouver',
-        },
+    $match: filter,
   },
   // extract fields for csv
   {
@@ -59,6 +61,7 @@ db.schedules.aggregate([
   // remove non-essential fields
   {
     $project: {
+      _id: 0,
       calculatedDates: 0,
       departureAirport: 0,
       arrivalAirport: 0,
