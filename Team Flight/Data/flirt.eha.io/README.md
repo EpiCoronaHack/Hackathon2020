@@ -107,10 +107,12 @@ Best way is to simply import all json files into mongoDB to perform local querie
 
 ### Extracted Datasets
 
-1. [Flight Schedules](https://drive.google.com/open?id=1EZJpA_x2zXbgEQ86Y3StAI2pOISjaWmm) from coronavirus [infected countries](https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6) to Vancouver.
-2. [Flight Schedules](https://drive.google.com/open?id=18zIs2o6TPMN2XrSNphxZDaqpF_xmcLd4) from coronavirus [infected countries](https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6) to cities with *high outbound traffic* to Vancouver.
-   - Can be used as an intermediary layer between affected areas and Vancouver (Dataset 1).
-   - A city is considered to have high outbound traffic if `total-seats/week` is at least `5000`.
+1. [Flight schedules](https://drive.google.com/open?id=1EZJpA_x2zXbgEQ86Y3StAI2pOISjaWmm) from coronavirus [affected countries](https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6) to Vancouver.
+2. [Flight schedules](https://drive.google.com/open?id=18zIs2o6TPMN2XrSNphxZDaqpF_xmcLd4) from coronavirus [affected countries](https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6) to cities with *high outbound traffic* to Vancouver.
+   - Can be used as an intermediary layer between affected countries and Vancouver (Dataset 1).
+   - A city is considered to have high outbound traffic if `total-flight-seats/week` is at least `5000`.
+   - Following are all such cities ordered from high to low outbound traffic to Vancouver  
+   `['Toronto',24481],['Calgary',22691],['Edmonton',12937],['Victoria',10945],['Hong Kong',10457],['Kelowna',9147],['Seattle',9015],['Los Angeles',7390],['San Francisco',6635],['Montreal-PET',6565],['Taipei',5798],['Prince George',5234],['Beijing',5159]`
 
 ## Development
 
