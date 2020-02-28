@@ -25,7 +25,6 @@ const highOutboundTrafficToVanCities = db.schedules.aggregate([
   {
     $match:
         {
-          'departureAirport.countryName': { $in: affectedAreas },
           'arrivalAirport.city': 'Vancouver',
         },
   },
