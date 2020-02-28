@@ -17,7 +17,7 @@ python writer.py <data_output_volume>
 ```
 
 **Client Startup**  
-Following instructions have been tested on chrome.
+> **Note:** Following instructions have only been tested on chrome.
 
 1. Go to <https://flirt.eha.io/> and wait for site to finish loading.
 2. Open browser console (`ctrl-shift-j`)
@@ -84,7 +84,7 @@ Meteor.call('flightsByQuery', query, 1, (err, res) => {
     globalRegion,      [string]
     loc: {
       type,            [string]
-      coordinates,       [list]  [<longitude>, <latitude>]
+      coordinates,       [list]  [longitude, latitude]
     },
   }
   arrivalAirport:      [object]  same structure as `departureAirport`
@@ -122,3 +122,9 @@ If you wish to run a file watcher to automatically restart storage server on fil
 pip install watchdog
 watchmedo auto-restart --directory=<this-dir> -p="*.py" -- python writer.py <data_output_volume>
 ```
+
+## Licensing
+Feel free to redistribute or modify these scripts but be mindful of the fact that we **do not** own any rights to the data or the server query methods.
+
+If you choose to integrate these scripts with the flirt application code, please adhere to licensing guidelines for thier application found [here](https://github.com/ecohealthalliance/flirt). Contact the application owners to know about data usage limitations.
+
