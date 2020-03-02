@@ -27,11 +27,11 @@ The browser should begin downloading pages for each departure airport and sendin
 
 ### Accidental Termination
 
-In case, the server or the client is terminated or stops responding mid-way, take note of the name for last page file written in server logs. The page file name follows the convention: `<departure-airport-code>-<page-size>.json`. When restarting the procedure, use the `<departure-airport-code>` as `fromDeptCode` for `beginFetching` call in `client.js`.
+In case the server or the client is terminated or stops responding mid-way, take note of the name for last page file written in server logs. The page file name follows the convention: `<departure-airport-code>-<page-size>.json`. When restarting the procedure, use the `<departure-airport-code>` as `fromDeptCode` for `beginFetching` call in `client.js`.
 
 ## Quickly Fetching Data Statistics
 
-To obtain an updated report on stats without downloading all the data, run the following in the browser console after loading the [app](https://flirt.eha.io/):
+To obtain an updated report on stats without downloading all the data, run the following in the browser console after loading the [flirt app](https://flirt.eha.io/):
 
 ```console
 // Print total number of records matching the specified query.
